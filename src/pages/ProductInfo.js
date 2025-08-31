@@ -361,7 +361,7 @@ const ProductInfo = () => {
               {loading ? (
                 <div className="imagess"></div>
               ) : (
-                <img src={gameData?.logo || `${website.link}/default-game.jpg`} alt="" />
+                <img src={gameData?.image || `${website.link}/default-game.jpg`} alt="" />
               )}
               <div>
                 <h2 className={`m-0 loading ${loading && "active"}`} style={{ overflow: "hidden" }}>
