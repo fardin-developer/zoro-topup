@@ -1,0 +1,89 @@
+.explore-products-container {
+  color: #fff;
+}
+.popular-games {
+  width: 100%;
+  padding: 50px;
+  border-radius: 0px;
+  background: var(--b);
+}
+.titlee {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.titlee h5 {
+  text-transform: uppercase;
+  font-weight: 800;
+}
+.titlee span {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.games-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 30px;
+}
+.game {
+  width: 23%;
+  padding: 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+  background: var(--e) !important;
+}
+.game img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.game h5 {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: var(--c);
+  margin: 20px 0;
+}
+.buy-now {
+  padding: 5px 30px;
+  font-size: 15px;
+  border-radius: 100px;
+  margin-top: 5px;
+  outline: transparent;
+  transition: 0.3s all ease;
+  outline: transparent;
+  background: var(--s);
+  color: var(--p);
+}
+.buy-now:hover {
+  opacity: 0.8;
+}
+.buy-now .icon {
+  font-size: 14px;
+}
+
+@media screen and (max-width: 786px) {
+  .popular-games {
+    padding: 30px 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .games-list {
+    gap: 15px;
+  }
+  .game {
+    width: 30%;
+    margin-bottom: 20px;
+    padding: 10px;
+    img {
+      height: 100px;
+    }
+    h5 {
+      font-size: 14px;
+    }
+  }
+}

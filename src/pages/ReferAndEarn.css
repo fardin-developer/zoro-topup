@@ -1,0 +1,69 @@
+.refernearncontainer {
+  padding: 100px;
+  background: var(--b);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.refernearncontainer .section {
+  padding: 20px;
+  background: var(--f);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.refernearncontainer .refercode {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    margin: 0;
+    font-size: 20px;
+  }
+  button {
+    margin: 0;
+    width: fit-content;
+  }
+}
+
+.refernearncontainer .refercode {
+  gap: 10px;
+}
+.refernearncontainer input {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.inviteduser button {
+  display: flex;
+  background: var(--c);
+  font-weight: bold;
+  color: var(--a);
+  outline: transparent;
+  border: transparent;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 5px;
+}
+@media screen and (max-width: 786px) {
+  .refernearncontainer {
+    padding: 50px 10px;
+  }
+  .refernearncontainer label {
+    font-size: 12px;
+  }
+  .refernearncontainer .refercode {
+    h2 {
+      font-size: 14px;
+    }
+    button {
+      font-size: 12px;
+    }
+    input {
+      padding: 6px;
+    }
+  }
+}

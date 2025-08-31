@@ -1,0 +1,43 @@
+.followus-container {
+  padding: 50px 200px;
+  text-align: center;
+  background-color: var(--s);
+  color: #fff;
+}
+.followus-container h2 {
+  font-weight: 700;
+  margin-bottom: 30px;
+  font-size: 30px;
+}
+.followus-container span {
+  text-transform: uppercase;
+}
+.followus-container .socials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.followus-container .socials img {
+  width: 70px;
+  padding: 4px;
+  background-color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  scale: 1;
+  transition: 0.5s all ease;
+}
+.followus-container .socials img:hover {
+  scale: 1.1;
+}
+@media screen and (max-width: 786px) {
+  .followus-container {
+    padding: 30px 20px;
+  }
+  .followus-container .socials {
+    gap: 10px;
+  }
+  .followus-container .socials img {
+    width: 50px;
+  }
+}

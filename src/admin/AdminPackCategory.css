@@ -1,0 +1,12 @@
+.packcategory-container {
+  background-color: var(--b);
+  color: #000;
+}
+.packcategory-container .form-fields {
+  display: flex;
+  align-items: center;
+}
+.packcategory-container input {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  color: #000 !important;
+}

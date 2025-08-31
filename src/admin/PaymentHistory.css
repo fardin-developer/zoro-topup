@@ -1,0 +1,42 @@
+.paymentscontainer {
+  padding: 100px;
+  background: url("../img/allbg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.payment-containers {
+  padding: 20px;
+  border-radius: 5px;
+  background: var(--b);
+  color: var(--a);
+}
+.payment-containers .payments {
+  width: 100%;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
+  /* border: 1px solid red; */
+}
+.payment-containers .payments .item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+  /* border: 1px solid red; */
+}
+.payment-containers .payments .item h5 {
+  margin: 0;
+  font-size: 14px;
+}
+
+@media screen and (max-width: 786px) {
+  .paymentscontainer {
+    padding: 50px 10px;
+  }
+}

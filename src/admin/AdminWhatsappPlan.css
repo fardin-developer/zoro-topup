@@ -1,0 +1,48 @@
+.whatsappotp {
+  background: var(--p);
+  border-radius: 5px;
+  color: var(--t);
+  padding: 20px;
+}
+.availablecredits {
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin-top: 10px;
+  color: #000;
+  font-size: 15px;
+  background: rgb(228, 255, 222);
+  b {
+    color: green;
+  }
+}
+.availablecredits.warning {
+  background: rgb(255, 222, 222);
+  b {
+    color: red;
+  }
+}
+
+.admin-users-container .btns {
+  display: flex;
+  gap: 5px;
+  button {
+    font-size: 14px;
+    background: var(--c);
+    color: var(--a);
+    font-weight: bold;
+  }
+}
+.admin-whatsapp-plans .myhistory,
+.admin-whatsapp-plans .credithistory {
+  overflow-x: scroll;
+}
+@media screen and (max-width: 786px) {
+  .admin-users-container .btns {
+    display: flex;
+    gap: 5px;
+    button {
+      font-size: 10px;
+    }
+  }
+}

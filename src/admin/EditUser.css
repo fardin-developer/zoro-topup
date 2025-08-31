@@ -1,0 +1,14 @@
+.admin-edit-container {
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 992px) {
+  .edit-admin-user-img {
+    width: 100%;
+    border: 0;
+    margin-bottom: 20px;
+  }
+  .edit-admin-user-form {
+    width: 100%;
+  }
+}

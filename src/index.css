@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --a: #fff;
+  --b: #111;
+  --c: rgb(245, 72, 72);
+  --d: rgb(217, 30, 30);
+  --e: #222;
+  --f: #152230;
+  --p: red;
+  --s: #111;
+  --t: #a02100;
+  --color: #fff;
+  --bg: linear-gradient(180deg, #000 10%, #222 30%, #000 100%);
+  --btn: linear-gradient(45deg, #000 20%, var(--t) 100%);
+  --border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none !important;
+  text-decoration: none !important;
+  font-family: "Exo 2", sans-serif;
+}
+ul {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.popp {
+  font-family: "Poppins", sans-serif;
+}
+.caveat {
+  font-family: "Caveat", cursive;
+  font-weight: 500;
+}
+
+@media screen and (min-width: 993px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: linear-gradient(#333, #000);
+  }
+}

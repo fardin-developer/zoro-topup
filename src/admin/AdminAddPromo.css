@@ -1,0 +1,15 @@
+.admin-promo-container .form {
+  background-color: #fff;
+}
+.admin-promo-container .form label {
+  color: #000;
+}
+.admin-promo-container button {
+  background-color: #000;
+  padding: 10px 20px;
+  outline: transparent;
+  border: transparent;
+}
+.ql-editor p {
+  color: #000;
+}

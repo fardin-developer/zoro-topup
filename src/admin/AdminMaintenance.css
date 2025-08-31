@@ -1,0 +1,20 @@
+.maintenance {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+}
+.maintenance input {
+  padding: 10px;
+}
+.maintenance button {
+  width: 100%;
+  padding: 10px;
+  outline: transparent;
+  border: transparent;
+  background-color: #000;
+  color: #fff;
+}

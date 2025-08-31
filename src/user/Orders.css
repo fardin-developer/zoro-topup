@@ -1,0 +1,35 @@
+.user-order-container {
+  padding: 100px;
+  background: url("../img/allbg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.no-order-found {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--s);
+  color: var(--p);
+  padding: 10px;
+}
+.view-btn {
+  padding: 2px 10px;
+  background-color: var(--s);
+  color: var(--p);
+  outline: transparent;
+  border: transparent;
+}
+.loader-container {
+  height: 400px;
+}
+
+@media screen and (max-width: 786px) {
+  .user-order-container {
+    padding: 50px 10px;
+  }
+}

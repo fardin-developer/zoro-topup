@@ -1,0 +1,12 @@
+.admin-sidebar-container li {
+  margin: 20px 0;
+}
+.admin-sidebar-container a {
+  color: var(--c);
+  font-family: "Orbitron", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+}
+.admin-sidebar-container span {
+  font-weight: 100;
+}

@@ -1,0 +1,27 @@
+.admin-query-reply {
+  display: flex;
+  flex-direction: column;
+}
+.admin-query-reply .query-msg.user {
+  align-self: flex-start;
+  color: #000;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0px;
+}
+.admin-query-reply .query-msg.admin {
+  align-self: flex-end;
+  background-color: var(--t);
+  border-radius: 0px;
+  color: #fff;
+}
+.adminquery .ant-table-thead > tr > th {
+  background-color: #2c2c2c !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #444 !important;
+}
+
+.adminquery .ant-table-tbody > tr > td {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #333 !important;
+}

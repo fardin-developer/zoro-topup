@@ -1,0 +1,352 @@
+.header {
+  position: relative !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2) !important;
+}
+.header-main {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  position: relative;
+  width: 100%;
+  background-color: var(--s);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--p);
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--p);
+  font-weight: 600;
+  font-size: 18px;
+}
+.logo img {
+  padding: 4px;
+  border: 1px solid var(--c);
+  border-radius: 100px;
+  margin-right: 5px;
+  width: 40px;
+}
+.logo span {
+  color: var(--t);
+  font-size: 25px;
+}
+.menus ul {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.menus li {
+  list-style: none;
+}
+.menus a {
+  text-decoration: none;
+  color: var(--p);
+  font-size: 15px;
+  font-weight: 400;
+}
+.action-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.action-btns .icon {
+  color: var(--t);
+  font-size: 25px;
+  cursor: pointer;
+}
+.login-btn {
+  padding: 5px 15px;
+  background-color: #fff;
+  color: var(--s);
+  font-weight: 500;
+  outline: transparent;
+  border: 0;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+.request-btn {
+}
+.upgrade-btn {
+  padding: 10px;
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  outline: transparent;
+  margin: 0;
+}
+.help-menu {
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+  margin: 0 20px;
+}
+.menu-img {
+  border-radius: 100px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+.menu-img-container {
+  position: relative;
+}
+.img-hover-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+}
+/* ================================== */
+.burger-icon .icon {
+  font-size: 40px;
+  cursor: pointer;
+  color: var(--t);
+}
+
+.sub-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+.sub-header ul {
+  height: 100%;
+  display: flex;
+  gap: 20px;
+  justify-content: start;
+  align-items: center;
+}
+.sub-header ul li {
+  width: 100%;
+  width: auto;
+}
+.sub-header ul li a {
+  color: #fff;
+  position: relative;
+}
+.sub-header a.active {
+  background-color: #eee;
+  padding: 5px;
+}
+
+/* ================================= LOGOUT TIPPY  */
+.logout-tippy {
+  width: 100%;
+  padding: 20px 10px;
+}
+.logout-tippy .icon {
+  font-size: 20px;
+  color: #000;
+  margin: 5px 0;
+}
+.section-1,
+.section-2,
+.section-3 {
+  cursor: pointer;
+}
+.section-2 {
+  padding-bottom: 10px;
+}
+.section-3 {
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 10px;
+}
+.section-3 button {
+  padding: 10px;
+  background-color: #26bd68;
+  color: #fff;
+  outline: transparent;
+  border: transparent;
+  margin-top: 10px;
+}
+.wallet-cont {
+  background: var(--btn);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--a);
+  cursor: pointer;
+}
+.wallet-cont .icon {
+  color: var(--t);
+}
+.mobile-header {
+  padding: 15px;
+  width: 100%;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--p);
+  border-bottom: var(--border);
+  background-color: var(--s);
+  color: #fff;
+}
+.mobile-header .user-name {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  img {
+    width: 40px;
+    padding: 4px;
+    border: 1px solid var(--c);
+    border-radius: 100px;
+    margin-right: 5px;
+  }
+  span {
+    color: var(--d);
+    font-size: 15px;
+    font-weight: bold;
+  }
+}
+.headericon .sideheader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.headericon .sideheader .wallet {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background: var(--btn);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: var(--a);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  gap: 5px;
+  .icon {
+    color: var(--a);
+    font-size: 20px;
+  }
+}
+.headericon .icon {
+  font-size: 40px;
+  color: var(--p);
+}
+.logouticon {
+  display: flex;
+  align-items: center;
+  position: relative;
+  img {
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+}
+.logouticon .profiletabs {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  z-index: 9999;
+  background: var(--b);
+  padding: 10px 10px;
+  border: 1px solid var(--c);
+  border-radius: 10px;
+  .items {
+    display: flex;
+    margin-bottom: 10px;
+    cursor: pointer;
+    .icon {
+      margin-right: 5px;
+    }
+  }
+}
+
+.headericon .logouticon .lgicon {
+  font-size: 25px !important;
+  color: #fff !important;
+}
+/* ================================= LOGOUT TIPPY ENDS */
+
+/* ================================== */
+@media screen and (max-width: 1212px) {
+  .logo h3 {
+    font-size: 20px;
+  }
+  .menus ul li a {
+    font-size: 14px;
+    display: inline-block;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .logo h3 {
+    font-size: 20px;
+  }
+  .logo p {
+    font-size: 12px;
+  }
+  .menus ul li a {
+    font-size: 12px;
+    display: inline-block;
+  }
+}
+@media screen and (max-width: 992px) {
+  .header-main {
+    padding: 0 20px;
+  }
+  .logo img {
+    width: 150px;
+  }
+  .logo h3 {
+    font-size: 25px;
+  }
+  .logo p {
+    font-size: 14px;
+    color: grey;
+    margin: 0;
+  }
+  .sub-header {
+    padding: 0 20px;
+    overflow-x: scroll;
+  }
+  .sub-header ul {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  .sub-header ul li {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 786px) {
+  .logouticon .profiletabs {
+    .items {
+      display: flex;
+      margin-bottom: 10px;
+      font-size: 14px;
+      .icon {
+        margin-right: 5px;
+        font-size: 20px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 400px) {
+  .header-main {
+    padding: 0 5px;
+  }
+  .logo img {
+    width: 130px;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
+}

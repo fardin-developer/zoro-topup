@@ -1,0 +1,114 @@
+.loadingcontainer {
+  min-height: 50vh;
+  .loadingtext {
+    color: var(--c);
+    font-size: 30px;
+    font-weight: bold;
+  }
+}
+.page-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.page-title button {
+  background-color: #fff;
+  border: transparent;
+  outline: transparent;
+  color: #333;
+  padding: 5px 10px;
+}
+.table-container {
+  background-color: var(--b);
+  padding: 20px 10px;
+}
+.admin-body .tools {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  margin-bottom: 20px;
+  overflow-x: scroll;
+  gap: 15px;
+  input,
+  select,
+  button {
+    padding: 8px;
+    border: 1px solid var(--c);
+    border-radius: 5px;
+    width: 100%;
+    color: var(--c) !important;
+  }
+  button {
+    color: var(--a) !important;
+    background: var(--c);
+    font-weight: bold;
+  }
+  input::placeholder {
+    color: #ddd;
+  }
+}
+.table-container input {
+  color: #333;
+}
+.table-container input:focus {
+  outline: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+.user-table {
+  overflow-x: scroll !important;
+}
+.user-table img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 100px;
+}
+
+.pagination {
+  color: #333;
+  padding: 5px;
+}
+.pagination span {
+  background-color: #eee;
+  padding: 5px 10px;
+}
+
+.statusspan {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 786px) {
+  .admin-body .tools {
+    display: flex;
+    flex-direction: column;
+  }
+  .table-container {
+    overflow-x: scroll;
+    padding: 0;
+  }
+  .user-table img {
+    width: 100%;
+    border-radius: 100px;
+  }
+}
+
+/* PAGINATION CSS */
+/* PAGINATION CSS */
+/* PAGINATION CSS */
+/* PAGINATION CSS */
+/* PAGINATION CSS */
+.admin-body .adminpagiation {
+  display: flex;
+  justify-content: flex-end;
+}
+.admin-body .ant-pagination {
+  li {
+    background: var(--c) !important;
+  }
+}

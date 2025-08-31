@@ -1,0 +1,5 @@
+.admin-event button {
+  width: 100%;
+  background: var(--c);
+  font-weight: bold;
+}

@@ -1,0 +1,227 @@
+.success-container,
+.failure-container {
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px;
+  background: url("../img/loginbg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.success,
+.failure {
+  width: 30%;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--b);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid green;
+}
+.success .icon,
+.failure .icon {
+  font-size: 50px;
+  text-align: center;
+  color: green;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+.failure .icon {
+  color: var(--c);
+}
+
+.success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.success-prompt-heading,
+.failure-prompt-heading {
+  font-weight: 700;
+  color: rgb(22 101 52);
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 0 2px 15px red;
+  gap: 0.5rem;
+  margin: 0;
+}
+.failure-prompt-heading {
+  color: var(--c);
+  text-shadow: 0 2px 15px green;
+}
+
+.success p,
+.failure p {
+  text-align: center;
+  color: var(--a);
+  font-size: 12px;
+  margin: 10px 0 20px 0;
+}
+
+.success-svg,
+.failure-svg {
+  color: rgb(74 222 128);
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.4));
+  animation: pulse 2s infinite;
+}
+.failure-svg {
+  color: rgb(222, 74, 74);
+}
+
+.success-prompt-wrap {
+  margin-left: 1rem;
+}
+
+.failure-prompt-heading {
+  color: rgb(197, 33, 33);
+}
+
+.checkmark {
+  color: rgb(74 222 128);
+  animation: scaleCheck 0.3s ease-in-out;
+}
+.failure-container .checkmark {
+  color: rgb(222, 74, 74);
+  animation: scaleCheck 0.3s ease-in-out;
+}
+
+.success-prompt-prompt,
+.failure-prompt-prompt {
+  margin-top: 0.75rem;
+  color: rgb(21 128 61);
+  line-height: 1.5;
+}
+.failure-prompt-prompt {
+  color: rgb(128, 33, 21);
+}
+
+.success-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 0.75rem;
+}
+.success-button-main,
+.failure-button-main {
+  padding: 0.5rem 1rem;
+  background-color: var(--c);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(22, 101, 52, 0.2);
+}
+.failure-button-main {
+  background-color: rgb(101, 22, 22);
+}
+
+.success-button-main:hover {
+  background-color: var(--c);
+  color: var(--a);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(22, 101, 52, 0.3);
+}
+
+.success-button-secondary {
+  padding: 0.5rem 1rem;
+  background-color: rgb(22 101 52);
+  color: var(--a);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(22, 101, 52, 0.2);
+  transition: all 0.2s ease;
+}
+
+.success-button-secondary:hover {
+  transform: translateY(-1px);
+  opacity: 0.8;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleCheck {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Dodajemy efekt ripple dla przycisków */
+.success-button-main:active,
+.success-button-secondary:active {
+  transform: scale(0.95);
+}
+
+.orderitemcontainer {
+  background: var(--f);
+  color: var(--a);
+  border-radius: 10px;
+  border: 1px solid var(--c);
+  padding: 10px;
+  .orderitem {
+    display: flex;
+    justify-content: flex-start;
+    padding: 4px;
+    font-size: 12px;
+    gap: 10px;
+  }
+}
+
+@media screen and (max-width: 786px) {
+  .success-container,
+  .failure-container {
+    padding: 100px 20px;
+  }
+  .success,
+  .failure {
+    width: 100%;
+    text-align: center;
+  }
+  .success-prompt-heading,
+  .failure-prompt-heading {
+    font-size: 20px;
+  }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

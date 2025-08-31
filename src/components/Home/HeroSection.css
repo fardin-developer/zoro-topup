@@ -1,0 +1,87 @@
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: 75vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 1rem;
+  margin-bottom: 20px;
+}
+
+.hero-container::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Background Video Styling */
+.hero-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Heading */
+.hero-container h4 {
+  font-size: 50px;
+  margin: 0.5rem 0;
+  font-weight: bold;
+  z-index: 10;
+}
+
+/* Paragraph */
+.hero-container p {
+  font-size: 20px;
+  color: #ddd;
+  margin-top: 20px;
+  z-index: 10;
+}
+
+/* Button Styling */
+.hero-container button {
+  padding: 10px 20px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: rgb(245, 72, 72);
+  color: #fff;
+  transition: background-color 0.3s ease;
+  z-index: 10;
+  margin-top: 20px;
+}
+
+.hero-container button:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 786px) {
+  .hero-container {
+    height: 40vh;
+  }
+  .hero-container video {
+    object-position: top;
+  }
+  .hero-container h4 {
+    font-size: 30px;
+    margin-top: 10px;
+  }
+  .hero-container p {
+    font-size: 15px;
+    margin-top: 0;
+  }
+  .hero-container button {
+    font-size: 12px;
+  }
+}

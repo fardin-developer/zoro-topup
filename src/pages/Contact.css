@@ -1,0 +1,132 @@
+.contact-page-container {
+  padding: 100px;
+  background: var(--b);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-image img {
+  width: 100%;
+  border-radius: 50%;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.contact-form {
+  width: 40%;
+  padding: 50px 20px;
+  background: var(--b);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid var(--c);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h2 {
+  color: var(--p);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.contact-form span {
+  color: var(--p);
+  display: block;
+  margin-bottom: 25px;
+  font-size: 13px;
+}
+
+.contact-page-container input,
+.contact-page-container select,
+.contact-page-container textarea {
+  padding: 12px;
+  width: 100%;
+  background-color: transparent;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+  background: var(--f);
+  color: #fff;
+}
+
+.contact-page-container label {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.contact-page-container input:focus,
+.contact-page-container select:focus,
+.contact-page-container textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.2);
+}
+
+.contact-page-container input::placeholder,
+.contact-page-container textarea::placeholder {
+  color: #777;
+}
+
+.contact-page-container select option {
+  color: #000;
+}
+
+.form-fields {
+  margin-bottom: 15px;
+}
+
+.form-fields span.text-danger {
+  font-size: 12px;
+}
+
+.contact-form textarea {
+  resize: none;
+}
+
+.theme-btn {
+  color: #fff;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+}
+
+.theme-btn:hover {
+  background: #b30000;
+  box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.3);
+}
+
+@media screen and (max-width: 992px) {
+  .contact-page-container {
+    padding: 50px 20px;
+  }
+
+  .contact-page-container .row {
+    flex-direction: column;
+  }
+
+  .contact-image {
+    width: 90%;
+  }
+
+  .contact-image img {
+    width: 100%;
+  }
+
+  .contact-form {
+    width: 100%;
+  }
+}

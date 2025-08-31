@@ -1,0 +1,80 @@
+.sticky-footer {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  background-color: var(--s);
+  border-radius: 20px 20px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 9999;
+}
+.footer-tabs {
+  display: flex;
+  justify-content: space-between;
+}
+.footer-tabs .footer-icon {
+  padding: 8px 5px;
+  width: 25%;
+  color: #adadad;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.footer-icon span {
+  font-size: 8px;
+}
+.footer-tabs .footer-icon.active {
+  background-color: var(--s);
+  border-radius: 20px 20px 0 0;
+  border: 2px solid var(--p);
+  color: var(--p);
+}
+
+/* sticky-mobile-container */
+.sticky-mobile-container {
+  display: none;
+}
+.sticky-mobile-container.active {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+}
+.sticky-mobile-menu {
+  position: relative;
+  position: fixed;
+  background-color: var(--s);
+  height: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  transition: 0.8s all ease;
+  border-radius: 30px 30px 0 0;
+  padding-bottom: 30px;
+}
+.sticky-mobile-menu .cancel-icon {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 30px;
+}
+.sticky-menus-ul {
+  padding: 20px !important;
+}
+.sticky-menus-ul li {
+  color: #fff;
+  margin: 20px 0;
+  cursor: pointer;
+}
+.sticky-menus-ul a {
+  color: #fff;
+}

@@ -1,0 +1,33 @@
+.winner-container {
+  color: #000;
+  border-radius: 10px;
+}
+.winner-container .winnerbox {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  overflow-x: scroll;
+  color: var(--c);
+}
+.winner-container .winners {
+  overflow-x: scroll;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+}
+.winner-container .winner {
+  p {
+    margin: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .winner-container .winners {
+    overflow-x: auto;
+  }
+  .winner-container .winners table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+}

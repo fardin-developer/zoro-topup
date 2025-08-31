@@ -1,0 +1,36 @@
+.how-it-works {
+  padding: 50px 10px;
+  width: 100%;
+  background-color: #111;
+  color: #fff;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.how-it-works h6 {
+  font-weight: 600;
+  text-transform: uppercase;
+  width: 100%;
+}
+.how-it-works h3 span {
+  color: #26bd68;
+  font-size: 35px;
+}
+
+.before-footer .icon {
+  font-size: 40px;
+}
+@media screen and (max-width: 992px) {
+  .how-it-works {
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .choose-better-container::before {
+    /* background-image: url('../../svg/hero-mobile.svg'); */
+    bottom: -780px;
+  }
+  .how-it-works h2 {
+    font-size: 30px;
+    line-height: 35px;
+    text-align: center;
+  }
+}
