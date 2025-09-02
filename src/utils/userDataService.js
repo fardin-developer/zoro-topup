@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { setUser } from "../redux/features/userSlice";
 
-const getUserData = async (dispatch, setUser, setBalance) => {
+const getUserData = async (dispatch, setUserParam, setBalance) => {
   try {
     const res = await axios.get(
       "https://api.zorotopup.com/api/v1/user/me",

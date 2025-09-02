@@ -10,6 +10,7 @@ import MobileButtons from "../components/Home/MobileButtons.js";
 import Features from "../components/Features.js";
 import axios from "axios";
 import CancelIcon from "@mui/icons-material/Cancel";
+import GamingAccounts from "../components/GamingAccounts";
 import "./Home.css";
 
 const Home = () => {
@@ -23,9 +24,8 @@ const Home = () => {
 
   const getUserData = async () => {
     axios
-      .post(
-        "/api/user/getUserData",
-        {},
+      .get(
+        "https://api.zorotopup.com/api/v1/user/me",
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -33,7 +33,9 @@ const Home = () => {
         }
       )
       .then((res) => {
-        if (res.data.success) {
+        // The new API returns user data directly
+        if (res.data) {
+          // Handle successful response if needed
         } else {
           localStorage.removeItem("token");
         }
@@ -56,10 +58,10 @@ const Home = () => {
     }
   }
 
-  useEffect(() => {
-    getUserData();
-    getNoti();
-  }, []);
+  // useEffect(() => {
+  //   getUserData();
+  //   getNoti();
+  // }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -91,9 +93,9 @@ const Home = () => {
     }
   }
 
-  useEffect(() => {
-    getSlideText();
-  }, []);
+  // useEffect(() => {
+  //   getSlideText();
+  // }, []);
 
   return (
     <Layout>
@@ -115,6 +117,7 @@ const Home = () => {
         <MobileButtons />
         <UpcomingEvent />
         <Products title={"Trending Games"} />
+        <GamingAccounts />
         <Features />
       </div>
     </Layout>

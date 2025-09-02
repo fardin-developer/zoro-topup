@@ -41,9 +41,8 @@ const Address = () => {
 
   const getUserData = async () => {
     axios
-      .post(
-        "/api/user/getUserData",
-        {},
+      .get(
+        "https://api.zorotopup.com/api/v1/user/me",
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -51,7 +50,9 @@ const Address = () => {
         }
       )
       .then((res) => {
-        if (res.data.success) {
+        // The new API returns user data directly
+        if (res.data) {
+          // Handle successful response if needed
         } else {
           localStorage.removeItem("token");
         }

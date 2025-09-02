@@ -1,61 +1,103 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import DashboardLayout from "../user/components/DashboardLayout";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
-import "./Orders.css";
+// import "./PaymentHistory.css";
 
 const Orders = () => {
-  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
-  const [orders, setOrders] = useState([]);
-  const [data, setData] = useState([]);
+  const [sideMenu, setSideMenu] = useState(false);
+  const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 1,
+    totalOrders: 0,
+    hasNextPage: false,
+    hasPrevPage: false
+  });
+  
+  // Filter states
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+    dateFrom: "",
+    dateTo: "",
+    status: "",
+    orderType: ""
+  });
 
-  const getAllUserOrders = async () => {
+  async function getUserPayments() {
+    if (!user) return;
+    
+    setLoading(true);
     try {
-      setLoading(true);
-      const res = await axios.post(
-        "/api/order/get-user-orders",
-        { email: user?.email },
+      const queryParams = new URLSearchParams();
+      queryParams.append('page', filters.page.toString());
+      queryParams.append('limit', filters.limit.toString());
+      
+      if (filters.dateFrom) {
+        queryParams.append('dateFrom', filters.dateFrom);
+      }
+      if (filters.dateTo) {
+        queryParams.append('dateTo', filters.dateTo);
+      }
+      if (filters.status) {
+        queryParams.append('status', filters.status);
+      }
+      if (filters.orderType) {
+        queryParams.append('orderType', filters.orderType);
+      }
+
+      const res = await axios.get(
+        `https://api.zorotopup.com/api/v1/order/history?${queryParams.toString()}`,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         }
       );
+      
       if (res.data.success) {
-        setOrders(res.data.data.reverse());
-        setData(res.data.data);
-        setLoading(false);
-      } else {
-        setLoading(false);
+        setPayments(res.data.orders);
+        setPagination(res.data.pagination);
       }
     } catch (error) {
-      setLoading(false);
       console.log(error);
+      setPayments([]);
+    } finally {
+      setLoading(false);
     }
+  }
+
+  useEffect(() => {
+    getUserPayments();
+  }, [user, filters]);
+
+  const handleFilterChange = (key, value) => {
+    setFilters(prev => ({
+      ...prev,
+      [key]: value,
+      page: key !== 'page' ? 1 : value // Reset to page 1 when other filters change
+    }));
   };
 
-  useEffect(() => {
-    if (user !== null) {
-      getAllUserOrders();
-    }
-  }, [user]);
-
-  useEffect(() => {
-    const filteredOrders = data?.filter((item) => {
-      const itemDate = new Date(item.createdAt);
-      const selected = new Date(selectedDate);
-      return (
-        itemDate.getDate() === selected.getDate() &&
-        itemDate.getMonth() === selected.getMonth() &&
-        itemDate.getFullYear() === selected.getFullYear()
-      );
+  const clearFilters = () => {
+    setFilters({
+      page: 1,
+      limit: 10,
+      dateFrom: "",
+      dateTo: "",
+      status: "",
+      orderType: ""
     });
-    setOrders(filteredOrders);
-  }, [selectedDate]);
+  };
+
+  const handlePageChange = (newPage) => {
+    handleFilterChange('page', newPage);
+  };
 
   function getStatus(status) {
     switch (status) {
@@ -65,7 +107,7 @@ const Orders = () => {
         return "text-primary";
       case "failed":
         return "text-danger";
-      case "success":
+      case "completed":
         return "text-success";
       case "cancelled":
       case "refunded":
@@ -75,88 +117,151 @@ const Orders = () => {
     }
   }
 
+  const getItemName = (items) => {
+    return items && items.length > 0 ? items[0].itemName : "N/A";
+  };
+
+  const getDescription = (description) => {
+    try {
+      const parsed = JSON.parse(description);
+      return parsed.text || description;
+    } catch {
+      return description || "Diamond pack purchase";
+    }
+  };
+
   return (
     <Layout>
-      <div className="user-order-container">
+      <div className="paymentscontainer">
         <div className="wallethistories">
-          <h4>Your Orders</h4>
-          <div className="tools mb-3">
-            <div className="form-fields">
-              <input
-                type="date"
-                className="py-2 form-control"
-                placeholder="Search Order ID"
-                name="addition"
-                onChange={(e) => setSelectedDate(e.target.value)}
-              />
-            </div>
+          <h4>Your Payment History</h4>
 
-            <div className="form-fields">
-              <button
-                className="btn btn-danger"
-                onClick={() => {
-                  setOrders(data);
-                }}
-              >
-                Clear Filter
-              </button>
+          {/* Filter Tools */}
+          <div className="tools mb-3">
+            <div className="row">
+              <div className="col-md-3">
+                <div className="form-fields">
+                  <label className="form-label text-white">From Date</label>
+                  <input
+                    type="date"
+                    className="py-2 form-control"
+                    value={filters.dateFrom}
+                    onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="form-fields">
+                  <label className="form-label text-white">To Date</label>
+                  <input
+                    type="date"
+                    className="py-2 form-control"
+                    value={filters.dateTo}
+                    onChange={(e) => handleFilterChange('dateTo', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="col-md-2">
+                <div className="form-fields">
+                  <label className="form-label text-white">Status</label>
+                  <select
+                    className="py-2 form-control"
+                    value={filters.status}
+                    onChange={(e) => handleFilterChange('status', e.target.value)}
+                  >
+                    <option value="">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="failed">Failed</option>
+                  </select>
+                </div>
+              </div>
+              {/* <div className="col-md-2">
+                <div className="form-fields">
+                  <label className="form-label text-white">Per Page</label>
+                  <select
+                    className="py-2 form-control"
+                    value={filters.limit}
+                    onChange={(e) => handleFilterChange('limit', parseInt(e.target.value))}
+                  >
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={25}>25</option>
+                    <option value={50}>50</option>
+                  </select>
+                </div>
+                
+              </div> */}
+              <div className="col-md-2">
+                <div className="form-fields">
+                  <label className="form-label text-white">&nbsp;</label>
+                  <button
+                    className="btn btn-danger w-100"
+                    onClick={clearFilters}
+                  >
+                    Clear Filters
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          {/* DESKTOP */}
-          {/* DESKTOP */}
-          {/* DESKTOP */}
+
+          {/* Loading Indicator */}
+          {loading && (
+            <div className="text-center my-4">
+              <div className="spinner-border text-primary" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+            </div>
+          )}
+
+          {/* DESKTOP TABLE */}
           <div className="d-none d-md-none d-lg-block">
             <table className="table table-dark">
               <thead className="custom-thead">
                 <tr>
-                  <th>
-                    <small>Order ID</small>
-                  </th>
-                  <th>
-                    <small>Product</small>
-                  </th>
-                  <th>
-                    <small>Order Details</small>
-                  </th>
-                  <th>
-                    <small>Price</small>
-                  </th>
-                  <th>
-                    <small>User Id</small>
-                  </th>
-                  <th>
-                    <small>Date</small>
-                  </th>
-                  <th>
-                    <small>Status</small>
-                  </th>
+                  <th>Sr No</th>
+                  <th>Order ID</th>
+                  <th>Item Name</th>
+                  <th>Amount</th>
+                  <th>Payment Method</th>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                {orders && orders.length === 0 ? (
+                {!loading && payments?.length === 0 ? (
                   <tr>
-                    <td align="center" colSpan={10}>
-                      No order found
+                    <td colSpan={8}>
+                      <p className="text-center m-0">No Record Found</p>
                     </td>
                   </tr>
                 ) : (
-                  orders?.map((item, index) => {
+                  payments?.map((item, index) => {
+                    const globalIndex = (pagination.currentPage - 1) * filters.limit + index + 1;
                     return (
-                      <tr>
+                      <tr key={item._id}>
                         <td>
-                          <small>{item.orderId}</small>
+                          <small>{globalIndex}</small>
                         </td>
                         <td>
-                          <small>{item.p_info}</small>
+                          <small>{item?.orderId}</small>
                         </td>
                         <td>
-                          <small>{item.amount}</small>
+                          <small>{getItemName(item?.items)}</small>
                         </td>
                         <td>
-                          <small>{parseFloat(item.price).toFixed(2)}</small>
+                          <b>
+                            <small>
+                              ₹{parseFloat(item?.amount).toFixed(2)}
+                            </small>
+                          </b>
                         </td>
                         <td>
-                          <small>{item.userId}</small>
+                          <small>{item?.paymentMethod?.toUpperCase() || "N/A"}</small>
                         </td>
                         <td>
                           <small>
@@ -174,7 +279,12 @@ const Orders = () => {
                           </small>
                         </td>
                         <td>
-                          <small>{item?.status}</small>
+                          <small className="fw-bold text-info">
+                            {getDescription(item?.description)}
+                          </small>
+                        </td>
+                        <td className={`${getStatus(item?.status)}`}>
+                          <small>{item?.status?.toUpperCase()}</small>
                         </td>
                       </tr>
                     );
@@ -184,98 +294,127 @@ const Orders = () => {
             </table>
           </div>
 
-          {/* MOBILE */}
-          {/* MOBILE */}
-          {/* MOBILE */}
-          <div className="d-block d-lg-none wallet-history-mobile">
-            {orders && orders?.length === 0 ? (
-              <div className="whistory m-0">No order found</div>
-            ) : (
-              orders?.map((item, index) => {
-                return (
-                  <div className="whistory">
-                    <div className="items">
-                      <span className="fw-bold">Date</span>
-                      <span className="fw-bold text-success">
-                        {new Date(
-                          item?.createdAt || item?.created
-                        ).toLocaleString("default", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                          hour: "numeric",
-                          minute: "numeric",
-                          second: "numeric",
-                        })}
-                      </span>
-                    </div>
-                    <div className="items">
-                      <div className="item-name">
-                        <span>Order Id</span>
+          {/* MOBILE VIEW */}
+          <div className={`account-modal-container d-lg-none d-md-none`}>
+            <div className="account-modal-container-content">
+              <div
+                className="top-right-content box-2 center"
+                onClick={() => setSideMenu(!sideMenu)}
+              ></div>
+            </div>
+            <div className="payment-containers d-block d-md-block d-lg-none">
+              <p>Payment History</p>
+              <hr />
+              {!loading && payments?.length === 0 ? (
+                <p className="text-center m-0">No Record Found</p>
+              ) : (
+                payments?.map((item, index) => {
+                  return (
+                    <div className="payments w-100" key={item._id}>
+                      <div className="item">
+                        <h5>Order Id: {item?.orderId}</h5>
+                        <span>₹{item?.amount}</span>
                       </div>
-                      <div className="item-details text-primary">
-                        <span>{item?.orderId}</span>
-                      </div>
-                    </div>
-                    <div className="items">
-                      <div className="item-name">
-                        <span>Product</span>
-                      </div>
-                      <div className="item-details">
-                        <span>{item?.p_info}</span>
-                      </div>
-                    </div>
-
-                    <div className="items">
-                      <div className="item-name">
-                        <span>Order Details</span>
-                      </div>
-                      <div className="item-details">
-                        <span>{item?.amount}</span>
-                      </div>
-                    </div>
-                    <div className="items">
-                      <div className="item-name">
-                        <span>Price</span>
-                      </div>
-                      <div className="item-details">
-                        <span>₹{item?.price}</span>
-                      </div>
-                    </div>
-                    <div className="items">
-                      <div className="item-name">
-                        <span>User Id</span>
-                      </div>
-                      <div className="item-details">
-                        <span>{item?.userId}</span>
-                      </div>
-                    </div>
-                    {item?.zoneId && (
-                      <div className="items">
-                        <div className="item-name">
-                          <span>Zone Id</span>
-                        </div>
-                        <div className="item-details">
-                          <span>{item?.zoneId}</span>
-                        </div>
-                      </div>
-                    )}
-                    <div className="items">
-                      <div className="item-name">
-                        <span>Status</span>
-                      </div>
-                      <div className="item-details">
-                        <span className={getStatus(item?.status)}>
-                          {item?.status}
+                      <div className="item">
+                        <span className="">
+                          <small>
+                            {new Date(item?.createdAt).toLocaleString(
+                              "default",
+                              {
+                                day: "numeric",
+                                month: "numeric",
+                                year: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                second: "numeric",
+                              }
+                            )}
+                          </small>
+                        </span>
+                        <span className={`fw-bold ${getStatus(item?.status)}`}>
+                          <small>
+                            {item?.status?.toUpperCase()}
+                          </small>
                         </span>
                       </div>
+                      <div className="item">
+                        <small className="text-muted">
+                          {getItemName(item?.items)}
+                        </small>
+                        <small className="text-info">
+                          {item?.paymentMethod?.toUpperCase()}
+                        </small>
+                      </div>
+                      {index !== payments.length - 1 && <hr />}
                     </div>
-                  </div>
-                );
-              })
-            )}
+                  );
+                })
+              )}
+            </div>
           </div>
-          <button onClick={() => navigate(-1)}>Back</button>
+
+          {/* Pagination */}
+          {!loading && pagination.totalOrders > 0 && (
+            <div className="d-flex justify-content-between align-items-center mt-4">
+              <div className="text-white">
+                <small>
+                  Showing {((pagination.currentPage - 1) * filters.limit) + 1} to{' '}
+                  {Math.min(pagination.currentPage * filters.limit, pagination.totalOrders)} of{' '}
+                  {pagination.totalOrders} entries
+                </small>
+              </div>
+              <nav aria-label="Page navigation">
+                <ul className="pagination pagination-sm mb-0">
+                  <li className={`page-item ${!pagination.hasPrevPage ? 'disabled' : ''}`}>
+                    <button
+                      className="page-link bg-dark text-white border-secondary"
+                      onClick={() => handlePageChange(pagination.currentPage - 1)}
+                      disabled={!pagination.hasPrevPage}
+                    >
+                      Previous
+                    </button>
+                  </li>
+                  
+                  {/* Page numbers */}
+                  {[...Array(Math.min(5, pagination.totalPages))].map((_, idx) => {
+                    let pageNum;
+                    if (pagination.totalPages <= 5) {
+                      pageNum = idx + 1;
+                    } else {
+                      const start = Math.max(1, pagination.currentPage - 2);
+                      const end = Math.min(pagination.totalPages, start + 4);
+                      pageNum = start + idx;
+                      if (pageNum > end) return null;
+                    }
+                    
+                    return (
+                      <li
+                        key={pageNum}
+                        className={`page-item ${pagination.currentPage === pageNum ? 'active' : ''}`}
+                      >
+                        <button
+                          className="page-link bg-dark text-white border-secondary"
+                          onClick={() => handlePageChange(pageNum)}
+                        >
+                          {pageNum}
+                        </button>
+                      </li>
+                    );
+                  })}
+                  
+                  <li className={`page-item ${!pagination.hasNextPage ? 'disabled' : ''}`}>
+                    <button
+                      className="page-link bg-dark text-white border-secondary"
+                      onClick={() => handlePageChange(pagination.currentPage + 1)}
+                      disabled={!pagination.hasNextPage}
+                    >
+                      Next
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          )}
         </div>
       </div>
     </Layout>

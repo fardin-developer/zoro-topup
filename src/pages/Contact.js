@@ -72,9 +72,8 @@ const Contact = () => {
 
   const getUserData = async () => {
     axios
-      .post(
-        "/api/user/getUserData",
-        {},
+      .get(
+        "https://api.zorotopup.com/api/v1/user/me",
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -82,7 +81,8 @@ const Contact = () => {
         }
       )
       .then((res) => {
-        dispatch(setUser(res.data.data));
+        // The new API returns user data directly
+        dispatch(setUser(res.data));
       })
       .catch((error) => {
         console.log(error);

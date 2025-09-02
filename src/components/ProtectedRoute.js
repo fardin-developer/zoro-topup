@@ -10,36 +10,36 @@ export default function ProtectedRoute({ children }) {
   const { user } = useSelector((state) => state.user);
 
   //get user
-  const getUser = async (req, res) => {
+  const getUser = async () => {
     try {
-      const res = await axios.post(
-        "/api/user/getUserData",
-        {
-          token: localStorage.getItem("token"),
-        },
+      const res = await axios.get(
+        "https://api.zorotopup.com/api/v1/user/me",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      if (res.data.success) {
-        const { isAdmin } = res.data.data.user;
-        dispatch(setUser(res.data.data.user));
-        if (!isAdmin) {
-          navigate("/user-dashboard");
-        }
-      } else {
-        navigate("/login");
+      
+      // The new API returns user data directly
+      const userData = res.data;
+      dispatch(setUser(userData));
+      
+      // Check if user is admin based on role field
+      if (userData.role !== 'admin') {
+        navigate("/user-dashboard");
       }
-    } catch (error) {}
+    } catch (error) {
+      // If there's an error (like invalid token), redirect to login
+      navigate("/login");
+    }
   };
 
   useEffect(() => {
     if (!user) {
       getUser();
     }
-  }, [user, getUser]);
+  }, [user]);
 
   if (localStorage.getItem("token")) {
     return children;

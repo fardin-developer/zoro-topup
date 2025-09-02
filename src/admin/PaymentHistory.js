@@ -52,7 +52,7 @@ const PaymentHistory = () => {
       }
 
       const res = await axios.get(
-        `https://api.zorotopup.com/api/v1/order/history?${queryParams.toString()}`,
+        `https://api.zorotopup.com/api/v1/transaction/history?${queryParams.toString()}`,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -61,7 +61,7 @@ const PaymentHistory = () => {
       );
       
       if (res.data.success) {
-        setPayments(res.data.orders);
+        setPayments(res.data.transactions);
         setPagination(res.data.pagination);
       }
     } catch (error) {
@@ -116,19 +116,6 @@ const PaymentHistory = () => {
         return "text-dark";
     }
   }
-
-  const getItemName = (items) => {
-    return items && items.length > 0 ? items[0].itemName : "N/A";
-  };
-
-  const getDescription = (description) => {
-    try {
-      const parsed = JSON.parse(description);
-      return parsed.text || description;
-    } catch {
-      return description || "Diamond pack purchase";
-    }
-  };
 
   return (
     <Layout>
@@ -223,19 +210,21 @@ const PaymentHistory = () => {
               <thead className="custom-thead">
                 <tr>
                   <th>Sr No</th>
-                  <th>Order ID</th>
-                  <th>Item Name</th>
+                  <th>Transaction ID</th>
                   <th>Amount</th>
                   <th>Payment Method</th>
                   <th>Date</th>
-                  <th>Description</th>
+                  <th>Payment Note</th>
+                  <th>Customer Name</th>
+                  <th>UTR Number</th>
+                  <th>Payer UPI</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 {!loading && payments?.length === 0 ? (
                   <tr>
-                    <td colSpan={8}>
+                    <td colSpan={10}>
                       <p className="text-center m-0">No Record Found</p>
                     </td>
                   </tr>
@@ -249,9 +238,6 @@ const PaymentHistory = () => {
                         </td>
                         <td>
                           <small>{item?.orderId}</small>
-                        </td>
-                        <td>
-                          <small>{getItemName(item?.items)}</small>
                         </td>
                         <td>
                           <b>
@@ -280,8 +266,17 @@ const PaymentHistory = () => {
                         </td>
                         <td>
                           <small className="fw-bold text-info">
-                            {getDescription(item?.description)}
+                            {item?.paymentNote || "N/A"}
                           </small>
+                        </td>
+                        <td>
+                          <small>{item?.customerName || "N/A"}</small>
+                        </td>
+                        <td>
+                          <small>{item?.utr || "N/A"}</small>
+                        </td>
+                        <td>
+                          <small>{item?.payerUpi || "N/A"}</small>
                         </td>
                         <td className={`${getStatus(item?.status)}`}>
                           <small>{item?.status?.toUpperCase()}</small>
@@ -312,7 +307,7 @@ const PaymentHistory = () => {
                   return (
                     <div className="payments w-100" key={item._id}>
                       <div className="item">
-                        <h5>Order Id: {item?.orderId}</h5>
+                        <h5>Transaction ID: {item?.orderId}</h5>
                         <span>₹{item?.amount}</span>
                       </div>
                       <div className="item">
@@ -339,11 +334,21 @@ const PaymentHistory = () => {
                       </div>
                       <div className="item">
                         <small className="text-muted">
-                          {getItemName(item?.items)}
+                          {item?.paymentNote || "N/A"}
                         </small>
                         <small className="text-info">
-                          {item?.paymentMethod?.toUpperCase()}
+                          {item?.paymentMethod?.toUpperCase() || "N/A"}
                         </small>
+                      </div>
+                      <div className="item">
+                        <small className="text-muted">
+                          Customer: {item?.customerName || "N/A"}
+                        </small>
+                        {item?.utr && (
+                          <small className="text-info">
+                            UTR: {item?.utr}
+                          </small>
+                        )}
                       </div>
                       {index !== payments.length - 1 && <hr />}
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Layout from "../components/Layout/Layout";
 import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd";
@@ -10,13 +10,14 @@ const Login = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState("phone"); // phone, otp, registration
   const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [registrationData, setRegistrationData] = useState({
     name: "",
     email: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const otpRefs = useRef([]);
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
@@ -45,10 +46,49 @@ const Login = () => {
     }
   };
 
+  const handleOtpChange = (index, value) => {
+    // Only allow numbers
+    if (!/^\d*$/.test(value)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+
+    // Auto-focus next input
+    if (value && index < 5) {
+      otpRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleOtpKeyDown = (index, e) => {
+    // Handle backspace
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      otpRefs.current[index - 1]?.focus();
+    }
+  };
+
+  const handleOtpPaste = (e) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text");
+    const pastedOtp = pastedData.replace(/\D/g, "").slice(0, 6);
+    
+    const newOtp = [...otp];
+    for (let i = 0; i < 6; i++) {
+      newOtp[i] = pastedOtp[i] || "";
+    }
+    setOtp(newOtp);
+    
+    // Focus the next empty field or last field
+    const nextEmptyIndex = newOtp.findIndex((digit, idx) => !digit && idx < 6);
+    const focusIndex = nextEmptyIndex !== -1 ? nextEmptyIndex : 5;
+    otpRefs.current[focusIndex]?.focus();
+  };
+
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    if (!otp || otp.length < 4) {
-      message.error("Please enter a valid OTP");
+    const otpString = otp.join("");
+    if (!otpString || otpString.length < 6) {
+      message.error("Please enter a valid 6-digit OTP");
       return;
     }
 
@@ -56,7 +96,7 @@ const Login = () => {
     try {
       const res = await axios.post("https://api.zorotopup.com/api/v1/user/verify-otp", {
         phone: phone,
-        otp: otp,
+        otp: otpString,
       });
 
       if (res.data.requiresRegistration) {
@@ -149,15 +189,23 @@ const Login = () => {
       <h1>Zoro's Domain</h1>
       <p>Enter OTP sent to {phone}</p>
       <div className="form-fields mb-3">
-        <label className="form-label">OTP</label>
-        <input
-          onChange={(e) => setOtp(e.target.value)}
-          value={otp}
-          type="text"
-          className="form-control"
-          placeholder="Enter 6-digit OTP"
-          maxLength="6"
-        />
+        <label className="form-label">Enter 6-digit OTP</label>
+        <div className="otp-container">
+          {otp.map((digit, index) => (
+            <input
+              key={index}
+              ref={(el) => (otpRefs.current[index] = el)}
+              type="text"
+              className="otp-input"
+              value={digit}
+              onChange={(e) => handleOtpChange(index, e.target.value)}
+              onKeyDown={(e) => handleOtpKeyDown(index, e)}
+              onPaste={handleOtpPaste}
+              maxLength="1"
+              autoComplete="off"
+            />
+          ))}
+        </div>
       </div>
       <button className="register-btn" type="submit" disabled={loading}>
         {loading ? "Verifying..." : "Verify OTP"}

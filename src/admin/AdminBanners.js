@@ -123,7 +123,7 @@ const AdminBanners = () => {
   }
 
   useEffect(() => {
-    getSliderText();
+    // getSliderText();
     getBanners();
   }, []);
 

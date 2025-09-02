@@ -65,6 +65,8 @@ import AdminWhatsappPlan from "./admin/AdminWhatsappPlan.js";
 // for google login
 // for google login
 import { gapi } from "gapi-script";
+import AccountStore from "./pages/AccountStore.js";
+import AccountDetails from "./pages/AccountDetails.js";
 
 function App() {
   const [website, setWebsite] = useState(true);
@@ -137,7 +139,10 @@ function App() {
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/games" element={<GamePage />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/referandearn" element={<ReferAndEarn />} />
+          <Route path="/account-store" element={<AccountStore />} />
+          <Route path="/account/:gameType" element={<AccountStore />} />
+          <Route path="/account-details/:accountId" element={<AccountDetails />} />
+          {/* <Route path="/referandearn" element={<ReferAndEarn />} /> */}
           {/* <Route path="/service" element={<Service />} /> */}
           {/* <Route path="/promo" element={<PromoEvents />} /> */}
           {/* <Route path="/promo/:id?" element={<SinglePromoEvent />} /> */}

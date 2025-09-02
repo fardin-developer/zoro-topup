@@ -31,11 +31,11 @@ const MobileButtons = () => {
         </div>
         <span className="orb">Leaderboard</span>
       </div>
-      <div className="buttons" onClick={() => navigate("/referandearn")}>
+      <div className="buttons" onClick={() => navigate("/account-store")}>
         <div className="iconcontainer">
           <CurrencyExchangeIcon className="icon" />
         </div>
-        <span className="orb">Refer & Earn</span>
+        <span className="orb">ID Store</span>
       </div>
     </div>
   );

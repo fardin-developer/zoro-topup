@@ -20,9 +20,8 @@ const LogoutTippy = ({ user }) => {
 
   const getUserData = async () => {
     axios
-      .post(
-        "/api/user/getUserData",
-        {},
+      .get(
+        "https://api.zorotopup.com/api/v1/user/me",
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -30,8 +29,9 @@ const LogoutTippy = ({ user }) => {
         }
       )
       .then((res) => {
-        if (res.data.success) {
-          dispatch(setUser(res.data.data.user));
+        // The new API returns user data directly
+        if (res.data) {
+          dispatch(setUser(res.data));
         } else {
           dispatch(setUser(null));
           localStorage.removeItem("token");
@@ -39,6 +39,8 @@ const LogoutTippy = ({ user }) => {
       })
       .catch((error) => {
         console.log(error);
+        dispatch(setUser(null));
+        localStorage.removeItem("token");
       });
   };
 

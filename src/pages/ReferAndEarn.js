@@ -19,9 +19,8 @@ const ReferAndEarn = () => {
 
   const getUserData = async () => {
     axios
-      .post(
-        "/api/user/getUserData",
-        {},
+      .get(
+        "https://api.zorotopup.com/api/v1/user/me",
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -29,9 +28,10 @@ const ReferAndEarn = () => {
         }
       )
       .then((res) => {
-        if (res.data.success) {
-          setForm(res.data.data.user);
-          dispatch(setUser(res.data.data.user));
+        // The new API returns user data directly
+        if (res.data) {
+          setForm(res.data);
+          dispatch(setUser(res.data));
         } else {
           localStorage.removeItem("token");
         }

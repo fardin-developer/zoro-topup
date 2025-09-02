@@ -19,8 +19,13 @@ const Wallet = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [histories, setHistories] = useState([]);
   const [historyData, setHistoryData] = useState([]);
-
-
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 10,
+    total: 0,
+    pages: 0
+  });
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     getWalletBalance();
@@ -42,8 +47,6 @@ const Wallet = () => {
     }
   }
 
-
-
   async function addWalletBalance() {
     try {
       setLoading(true);
@@ -62,22 +65,17 @@ const Wallet = () => {
         }
       );
       
-             if (response.data.success) {
-         message.success(response.data.message);
-         // Store transaction details for reference
-         localStorage.setItem("currentTransaction", JSON.stringify(response.data.transaction));
-         
-         // Refresh balance after successful payment request
-         getWalletBalance();
-         
-         // Redirect to payment URL
-         if (response.data.transaction.paymentUrl) {
-           window.location.href = response.data.transaction.paymentUrl;
-         } else {
-           // Show UPI options if payment URL is not available
-           showUpiOptions(response.data.transaction);
-         }
-       } else {
+      if (response.data.success) {
+        message.success(response.data.message);
+        localStorage.setItem("currentTransaction", JSON.stringify(response.data.transaction));
+        getWalletBalance();
+        
+        if (response.data.transaction.paymentUrl) {
+          window.location.href = response.data.transaction.paymentUrl;
+        } else {
+          showUpiOptions(response.data.transaction);
+        }
+      } else {
         message.error(response.data.message || "Failed to create payment request");
         setLoading(false);
       }
@@ -106,7 +104,6 @@ const Wallet = () => {
         options.push({ name: "Google Pay", link: upiOptions.gpay_link });
       }
       
-      // Create a modal or alert to show UPI options
       const optionText = options.map(option => 
         `${option.name}: ${option.link}`
       ).join('\n\n');
@@ -117,28 +114,33 @@ const Wallet = () => {
   }
 
   useEffect(() => {
-    const filteredHis = historyData?.filter((item) => {
-      const itemDate = new Date(item.createdAt);
-      const selected = new Date(selectedDate);
-      return (
-        itemDate.getDate() === selected.getDate() &&
-        itemDate.getMonth() === selected.getMonth() &&
-        itemDate.getFullYear() === selected.getFullYear()
-      );
-    });
-    setHistories(filteredHis);
-  }, [selectedDate]);
+    if (selectedDate) {
+      const filteredHis = historyData?.filter((item) => {
+        const itemDate = new Date(item.createdAt);
+        const selected = new Date(selectedDate);
+        return (
+          itemDate.getDate() === selected.getDate() &&
+          itemDate.getMonth() === selected.getMonth() &&
+          itemDate.getFullYear() === selected.getFullYear()
+        );
+      });
+      setHistories(filteredHis);
+    }
+  }, [selectedDate, historyData]);
 
-  async function getHistories() {
+  async function getHistories(page = 1) {
     try {
-      const res = await axios.get("https://api.zorotopup.com/api/v1/transaction/history", {
+      const res = await axios.get(`https://api.zorotopup.com/api/v1/wallet/history?page=${page}&limit=10`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
       if (res.data.success) {
-        setHistories(res.data.transactions.reverse());
-        setHistoryData(res.data.transactions);
+        const transactions = res.data.data.transactions || [];
+        setHistories(transactions.reverse());
+        setHistoryData(transactions);
+        setPagination(res.data.data.pagination);
+        setCurrentPage(page);
       }
     } catch (error) {
       console.log(error);
@@ -157,9 +159,92 @@ const Wallet = () => {
     }
   }
 
-  useEffect(() => {
-    getHistories();
-  }, []);
+  // Pagination helper functions
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= pagination.pages) {
+      getHistories(page);
+    }
+  };
+
+  const renderPagination = () => {
+    if (pagination.pages <= 1) return null;
+
+    const pages = [];
+    const currentPage = pagination.page;
+    const totalPages = pagination.pages;
+
+    // Show first page
+    if (currentPage > 3) {
+      pages.push(
+        <button 
+          key={1} 
+          className={`pagination-btn ${currentPage === 1 ? 'active' : ''}`}
+          onClick={() => handlePageChange(1)}
+        >
+          1
+        </button>
+      );
+      if (currentPage > 4) {
+        pages.push(<span key="start-ellipsis" className="pagination-ellipsis">...</span>);
+      }
+    }
+
+    // Show pages around current page
+    for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+      pages.push(
+        <button 
+          key={i} 
+          className={`pagination-btn ${currentPage === i ? 'active' : ''}`}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    // Show last page
+    if (currentPage < totalPages - 2) {
+      if (currentPage < totalPages - 3) {
+        pages.push(<span key="end-ellipsis" className="pagination-ellipsis">...</span>);
+      }
+      pages.push(
+        <button 
+          key={totalPages} 
+          className={`pagination-btn ${currentPage === totalPages ? 'active' : ''}`}
+          onClick={() => handlePageChange(totalPages)}
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
+    return (
+      <div className="pagination-container">
+        <div className="pagination-info">
+          <small>
+            Showing {((currentPage - 1) * pagination.limit) + 1} to {Math.min(currentPage * pagination.limit, pagination.total)} of {pagination.total} entries
+          </small>
+        </div>
+        <div className="pagination-controls">
+          <button 
+            className="pagination-btn"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage <= 1}
+          >
+            Previous
+          </button>
+          {pages}
+          <button 
+            className="pagination-btn"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage >= totalPages}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <Layout>
@@ -189,19 +274,20 @@ const Wallet = () => {
                 Need Help? <Link to="/support">Contact Support</Link>
               </div>
             </div>
-            <div className="checkhistory" onClick={() => setTab(1)}>
+            <div className="checkhistory" onClick={() => {
+              setTab(1);
+              getHistories(1);
+            }}>
               <span>Check History</span>
               <HistoryIcon className="icon" />
             </div>
           </>
         )}
 
-        {/* history  */}
-        {/* history  */}
-        {/* history  */}
+        {/* history */}
         {tab === 1 && (
           <div className="wallethistories">
-            <h4>Your Payments</h4>
+            <h4>Your Payment History</h4>
             <div className="tools mb-3">
               <div className="form-fields">
                 <input
@@ -216,107 +302,93 @@ const Wallet = () => {
                   className="btn btn-danger"
                   onClick={() => {
                     setHistories(historyData);
+                    setSelectedDate("");
                   }}
                 >
                   Clear Filter
                 </button>
               </div>
             </div>
-            {/* DESKTOP */}
-            {/* DESKTOP */}
+            
             {/* DESKTOP */}
             <div className="d-none d-md-none d-lg-block">
-              <table className="table table-dark">
-                                 <thead className="custom-thead">
-                   <tr>
-                     <th>
-                       <small>Order ID</small>
-                     </th>
-                     <th>
-                       <small>Amount</small>
-                     </th>
-                     <th>
-                       <small>Status</small>
-                     </th>
-                     <th>
-                       <small>Payment Note</small>
-                     </th>
-                     <th>
-                       <small>Customer Name</small>
-                     </th>
-                     <th>
-                       <small>UTR Number</small>
-                     </th>
-                     <th>
-                       <small>Payer UPI</small>
-                     </th>
-                     <th>
-                       <small>Date</small>
-                     </th>
-                   </tr>
-                 </thead>
+              <table className="table table-dark table-responsive">
+                <thead className="custom-thead">
+                  <tr>
+                    <th><small>Transaction ID</small></th>
+                    <th><small>Type</small></th>
+                    <th><small>Amount</small></th>
+                    <th><small>Status</small></th>
+                    <th><small>Description</small></th>
+                    <th><small>Balance</small></th>
+                    <th><small>Date</small></th>
+                  </tr>
+                </thead>
                 <tbody>
                   {histories && histories?.length === 0 ? (
                     <tr>
-                      <td align="center" colSpan={9}>
+                      <td align="center" colSpan={7}>
                         No record found
                       </td>
                     </tr>
                   ) : (
-                                         histories?.map((item, index) => {
-                       return (
-                         <tr key={item._id}>
-                           <td>
-                             <small>{item.orderId}</small>
-                           </td>
-                           <td>
-                             <b>
-                               <small>₹{parseFloat(item.amount).toFixed(2)}</small>
-                             </b>
-                           </td>
-                           <td>
-                             <small>
-                               <span className={`badge ${item.status === 'success' ? 'bg-success' : item.status === 'pending' ? 'bg-warning' : 'bg-danger'}`}>
-                                 {item.status.toUpperCase()}
-                               </span>
-                             </small>
-                           </td>
-                           <td>
-                             <small>{item.paymentNote}</small>
-                           </td>
-                           <td>
-                             <small>{item.customerName}</small>
-                           </td>
-                           <td>
-                             <small>{item.utr || "N/A"}</small>
-                           </td>
-                           <td>
-                             <small>{item.payerUpi || "N/A"}</small>
-                           </td>
-                           <td>
-                             <small>
-                               {new Date(item?.createdAt).toLocaleString(
-                                 "default",
-                                 {
-                                   day: "numeric",
-                                   month: "long",
-                                   year: "numeric",
-                                   hour: "numeric",
-                                   minute: "numeric",
-                                   second: "numeric",
-                                 }
-                               )}
-                             </small>
-                           </td>
-                         </tr>
-                       );
-                     })
+                    histories?.map((item, index) => {
+                      return (
+                        <tr key={item._id}>
+                          <td>
+                            <small>{item.metadata?.orderId || item._id}</small>
+                          </td>
+                          <td>
+                            <small>
+                              <span className={`badge ${item.transactionType === 'credit' ? 'bg-success' : 'bg-danger'}`}>
+                                {item.transactionType.toUpperCase()}
+                              </span>
+                            </small>
+                          </td>
+                          <td>
+                            <b>
+                              <small>₹{parseFloat(item.amount).toFixed(2)}</small>
+                            </b>
+                          </td>
+                          <td>
+                            <small>
+                              <span className={`badge ${item.status === 'completed' ? 'bg-success' : item.status === 'pending' ? 'bg-warning' : 'bg-danger'}`}>
+                                {item.status.toUpperCase()}
+                              </span>
+                            </small>
+                          </td>
+                          <td className="description-cell">
+                            <small>{item.description}</small>
+                          </td>
+                          <td className="balance-cell">
+                            <small>
+                              <div>Before: ₹{item.balanceBefore}</div>
+                              <div>After: ₹{item.balanceAfter}</div>
+                            </small>
+                          </td>
+                          <td>
+                            <small>
+                              {new Date(item?.createdAt).toLocaleString(
+                                "default",
+                                {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric",
+                                  hour: "numeric",
+                                  minute: "numeric",
+                                  second: "numeric",
+                                }
+                              )}
+                            </small>
+                          </td>
+                        </tr>
+                      );
+                    })
                   )}
                 </tbody>
               </table>
             </div>
-            {/* MOBILE */}
-            {/* MOBILE */}
+            
             {/* MOBILE */}
             <div className="d-block d-lg-none wallet-history-mobile">
               {histories && histories?.length === 0 ? (
@@ -324,7 +396,7 @@ const Wallet = () => {
               ) : (
                 histories?.map((item, index) => {
                   return (
-                    <div className="whistory">
+                    <div className="whistory" key={item._id}>
                       <div className="items">
                         <span className="fw-bold">Transaction Details</span>
                         <span className="fw-bold text-success text-end">
@@ -342,72 +414,83 @@ const Wallet = () => {
                       </div>
                       <div className="items">
                         <div className="item-name">
-                          <span>Order Id</span>
+                          <span>Transaction ID</span>
                         </div>
                         <div className="item-details text-primary">
-                          <span>{item?.orderId}</span>
+                          <span>{item?.metadata?.orderId || item?._id}</span>
                         </div>
                       </div>
-
-                                             <div className="items">
-                         <div className="item-name">
-                           <span>Amount</span>
-                         </div>
-                         <div className="item-details">
-                           <span>₹{item?.amount}</span>
-                         </div>
-                       </div>
-                       <div className="items">
-                         <div className="item-name">
-                           <span>Status</span>
-                         </div>
-                         <div className="item-details">
-                           <span className={`${item.status === 'success' ? 'text-success' : item.status === 'pending' ? 'text-warning' : 'text-danger'}`}>
-                             {item.status.toUpperCase()}
-                           </span>
-                         </div>
-                       </div>
-                       <div className="items">
-                         <div className="item-name">
-                           <span>Payment Note</span>
-                         </div>
-                         <div className="item-details">
-                           <span>{item?.paymentNote}</span>
-                         </div>
-                       </div>
-                       <div className="items">
-                         <div className="item-name">
-                           <span>Customer Name</span>
-                         </div>
-                         <div className="item-details">
-                           <span>{item?.customerName}</span>
-                         </div>
-                       </div>
-                       {item?.utr && (
-                         <div className="items">
-                           <div className="item-name">
-                             <span>UTR Number</span>
-                           </div>
-                           <div className="item-details">
-                             <span>{item?.utr}</span>
-                           </div>
-                         </div>
-                       )}
-                       {item?.payerUpi && (
-                         <div className="items">
-                           <div className="item-name">
-                             <span>Payer UPI</span>
-                           </div>
-                           <div className="item-details">
-                             <span>{item?.payerUpi}</span>
-                           </div>
-                         </div>
-                       )}
+                      <div className="items">
+                        <div className="item-name">
+                          <span>Type</span>
+                        </div>
+                        <div className="item-details">
+                          <span className={`${item.transactionType === 'credit' ? 'text-success' : 'text-danger'}`}>
+                            {item?.transactionType?.toUpperCase()}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="items">
+                        <div className="item-name">
+                          <span>Amount</span>
+                        </div>
+                        <div className="item-details">
+                          <span>₹{item?.amount}</span>
+                        </div>
+                      </div>
+                      <div className="items">
+                        <div className="item-name">
+                          <span>Status</span>
+                        </div>
+                        <div className="item-details">
+                          <span className={`${item.status === 'completed' ? 'text-success' : item.status === 'pending' ? 'text-warning' : 'text-danger'}`}>
+                            {item.status.toUpperCase()}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="items">
+                        <div className="item-name">
+                          <span>Description</span>
+                        </div>
+                        <div className="item-details">
+                          <span>{item?.description}</span>
+                        </div>
+                      </div>
+                      <div className="items">
+                        <div className="item-name">
+                          <span>Balance Before</span>
+                        </div>
+                        <div className="item-details">
+                          <span>₹{item?.balanceBefore}</span>
+                        </div>
+                      </div>
+                      <div className="items">
+                        <div className="item-name">
+                          <span>Balance After</span>
+                        </div>
+                        <div className="item-details">
+                          <span>₹{item?.balanceAfter}</span>
+                        </div>
+                      </div>
+                      {item?.metadata?.utr && (
+                        <div className="items">
+                          <div className="item-name">
+                            <span>UTR Number</span>
+                          </div>
+                          <div className="item-details">
+                            <span>{item?.metadata?.utr}</span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })
               )}
             </div>
+
+            {/* Pagination */}
+            {!selectedDate && renderPagination()}
+
             <button onClick={() => setTab(0)}>Back</button>
           </div>
         )}

@@ -14,16 +14,17 @@ const Settings = () => {
 
   const getUserData = async () => {
     axios
-      .post(
-        "/api/user/getUserData",
-        {},
+      .get(
+        "https://api.zorotopup.com/api/v1/user/me",
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         }
       )
-      .then((res) => {})
+      .then((res) => {
+        // Handle response if needed
+      })
       .catch((error) => {
         console.log(error);
       });
