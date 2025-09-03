@@ -95,7 +95,7 @@ const Footer = () => {
                   )
                 }
               >
-                ~@aashirdigital
+                ~@fardin
               </Link>
             </small>
           </span>
