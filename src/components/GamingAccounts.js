@@ -112,9 +112,9 @@ const GamingAccounts = () => {
                 {account.discount && (
                   <div className="discount-tag">-{account.discount}%</div>
                 )}
-                <div className="price-tag">
+                {/* <div className="price-tag">
                   <span>{account.price}</span>
-                </div>
+                </div> */}
                 <div className="category-tag">{account.category}</div>
                 <div className="account-overlay">
                   <div className="account-info">

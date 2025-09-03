@@ -88,12 +88,6 @@ const Footer = () => {
               by{" "}
               <Link
                 className="text-danger"
-                onClick={() =>
-                  window.open(
-                    `https://wa.me/919284263003?text=Hello! I want to make a website like ${website?.name}`,
-                    "_blank"
-                  )
-                }
               >
                 ~@fardin
               </Link>

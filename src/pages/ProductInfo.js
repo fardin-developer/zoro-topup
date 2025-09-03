@@ -508,7 +508,7 @@ const ProductInfo = () => {
               </div>
 
               {/* QUANTITY SELECTION */}
-              <div className="quantitysection">
+              {/* <div className="quantitysection">
                 <div className="bg-fields transparentbg">
                   <h5>Quantity</h5>
                   <div className="quantity-container">
@@ -527,7 +527,7 @@ const ProductInfo = () => {
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* ORDER SUMMARY */}
               <div className="totaltable">
