@@ -11,36 +11,36 @@ const AccountDetails = () => {
 
   // Get account data from state or fetch from API
   const account = location.state?.account || {
-    id: parseInt(accountId),
+    _id: accountId,
     game: "Gaming Account",
-    image: "/android-chrome-512x512.png",
+    gameType: "unknown",
+    title: "Premium Gaming Account",
     description: "Premium Gaming Account",
     price: 5000,
-    originalPrice: 6000,
-    discount: 17,
-    inStock: true,
-    features: ["High Level", "Premium Items", "Rare Skins"],
-    serverRegion: "Global",
-    accountLevel: 100,
-    category: "Premium"
+    currency: "INR",
+    highlights: {
+      collectorRank: "Unknown",
+      winrate: 0,
+      skinsOwned: 0,
+      highestRank: "Unknown",
+      loginInfo: "Unknown",
+      server: "Unknown"
+    },
+    skins: [],
+    images: ["/android-chrome-512x512.png"],
+    tags: ["High Level", "Premium Items", "Rare Skins"],
+    isSold: false,
+    status: "active"
   };
 
-  // Sample additional images for gallery
-  const galleryImages = [
-    account.image,
-    "/android-chrome-512x512.png",
-    "/android-chrome-192x192.png",
-    "/favicon-32x32.png"
-  ];
+  // Use account images or fallback to sample images
+  const galleryImages = account.images && account.images.length > 0 
+    ? account.images 
+    : ["/android-chrome-512x512.png", "/android-chrome-192x192.png", "/favicon-32x32.png"];
 
   const handlePurchase = () => {
-    // Navigate to payment page with account details
-    navigate('/payment', { 
-      state: { 
-        product: account,
-        type: 'gaming-account'
-      } 
-    });
+    // Redirect to WhatsApp for purchase inquiry
+    window.open('https://api.whatsapp.com/send/?phone=919402831766&text&type=phone_number&app_absent=0', '_blank');
   };
 
   const handleBackToStore = () => {
@@ -50,10 +50,12 @@ const AccountDetails = () => {
   return (
     <Layout>
       <div className="account-details-container">
-        {/* Back Button */}
-        <button className="back-button" onClick={handleBackToStore}>
-          ← Back to Store
-        </button>
+        {/* Back Buttons */}
+        <div className="back-navigation">
+          <button className="back-button" onClick={handleBackToStore}>
+            ← Back to Store
+          </button>
+        </div>
 
         <div className="account-details-content">
           {/* Image Gallery */}
@@ -66,14 +68,12 @@ const AccountDetails = () => {
                   e.target.src = "/android-chrome-512x512.png";
                 }}
               />
-              {account.discount > 0 && (
-                <div className="discount-badge">-{account.discount}%</div>
-              )}
-              {!account.inStock && (
+              {account.isSold && (
                 <div className="out-of-stock-overlay">
-                  <span>Out of Stock</span>
+                  <span>Sold Out</span>
                 </div>
               )}
+              <div className="rank-badge">{account.highlights.collectorRank}</div>
             </div>
             
             <div className="thumbnail-gallery">
@@ -95,18 +95,13 @@ const AccountDetails = () => {
           {/* Account Information */}
           <div className="account-info">
             <div className="account-header">
-              <h1>{account.game}</h1>
-              <div className="category-badge">{account.category}</div>
+              <h1>{account.title || account.game}</h1>
+              <div className="game-type-badge">{account.game}</div>
             </div>
 
             <div className="account-pricing">
-              {account.originalPrice > account.price && (
-                <span className="original-price">₹{account.originalPrice.toLocaleString()}</span>
-              )}
               <span className="current-price">₹{account.price.toLocaleString()}</span>
-              {account.discount > 0 && (
-                <span className="savings">Save ₹{(account.originalPrice - account.price).toLocaleString()}</span>
-              )}
+              <span className="currency">{account.currency}</span>
             </div>
 
             <div className="account-description">
@@ -114,48 +109,95 @@ const AccountDetails = () => {
               <p>{account.description}</p>
             </div>
 
-            <div className="account-details-section">
-              <h3>Account Details</h3>
-              <div className="details-grid">
-                <div className="detail-item">
-                  <span className="label">Level:</span>
-                  <span className="value">{account.accountLevel}</span>
+            {/* Account Highlights */}
+            <div className="account-highlights-section">
+              <h3>Account Highlights</h3>
+              <div className="highlights-grid">
+                <div className="highlight-item">
+                  <span className="label">Rank:</span>
+                  <span className="value rank-value">{account.highlights.collectorRank}</span>
                 </div>
-                <div className="detail-item">
-                  <span className="label">Server Region:</span>
-                  <span className="value">{account.serverRegion}</span>
+                <div className="highlight-item">
+                  <span className="label">Win Rate:</span>
+                  <span className="value winrate-value">{account.highlights.winrate}%</span>
                 </div>
-                <div className="detail-item">
-                  <span className="label">Category:</span>
-                  <span className="value">{account.category}</span>
+                <div className="highlight-item">
+                  <span className="label">Highest Rank:</span>
+                  <span className="value">{account.highlights.highestRank}</span>
                 </div>
-                <div className="detail-item">
-                  <span className="label">Stock Status:</span>
-                  <span className={`value ${account.inStock ? 'in-stock' : 'out-of-stock'}`}>
-                    {account.inStock ? 'In Stock' : 'Out of Stock'}
+                <div className="highlight-item">
+                  <span className="label">Server:</span>
+                  <span className="value">{account.highlights.server}</span>
+                </div>
+                <div className="highlight-item">
+                  <span className="label">Login Type:</span>
+                  <span className="value">{account.highlights.loginInfo}</span>
+                </div>
+                {account.highlights.skinsOwned > 0 && (
+                  <div className="highlight-item">
+                    <span className="label">Skins Owned:</span>
+                    <span className="value skins-value">{account.highlights.skinsOwned}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Skins Collection */}
+            {account.skins && account.skins.length > 0 && (
+              <div className="skins-section">
+                <h3>Featured Skins</h3>
+                <div className="skins-grid">
+                  {account.skins.map((skin, index) => (
+                    <div key={index} className="skin-item">
+                      <div className="skin-hero">{skin.hero}</div>
+                      <div className="skin-name">{skin.skinName}</div>
+                      <div className={`skin-rarity ${skin.rarity.toLowerCase()}`}>
+                        {skin.rarity}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Tags */}
+            <div className="account-tags-section">
+              <h3>Features & Highlights</h3>
+              <div className="tags-grid">
+                {account.tags.map((tag, index) => (
+                  <span key={index} className="tag-item">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Account Status */}
+            <div className="account-status-section">
+              <h3>Account Status</h3>
+              <div className="status-grid">
+                <div className="status-item">
+                  <span className="label">Status:</span>
+                  <span className={`value status-${account.status}`}>
+                    {account.status === 'active' ? 'Active' : 'Inactive'}
+                  </span>
+                </div>
+                <div className="status-item">
+                  <span className="label">Availability:</span>
+                  <span className={`value ${account.isSold ? 'out-of-stock' : 'in-stock'}`}>
+                    {account.isSold ? 'Sold Out' : 'Available'}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="account-features-section">
-              <h3>Features & Items</h3>
-              <div className="features-grid">
-                {account.features.map((feature, index) => (
-                  <div key={index} className="feature-item">
-                    ✓ {feature}
-                  </div>
-                ))}
-              </div>
-            </div>
-
             <div className="purchase-section">
               <button 
-                className={`purchase-btn ${!account.inStock ? 'disabled' : ''}`}
+                className={`purchase-btn ${account.isSold ? 'disabled' : ''}`}
                 onClick={handlePurchase}
-                disabled={!account.inStock}
+                disabled={account.isSold}
               >
-                {account.inStock ? `Buy Now - ₹${account.price.toLocaleString()}` : 'Out of Stock'}
+                {account.isSold ? 'Sold Out' : `Contact Us - ₹${account.price.toLocaleString()}`}
               </button>
               
               <div className="security-info">

@@ -1,138 +1,202 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/Layout/Layout';
 import GamingAccounts from '../components/GamingAccounts';
 import './AccountStore.css';
 
 const AccountStore = () => {
-  const { gameType } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [accounts, setAccounts] = useState([]);
   const [filteredAccounts, setFilteredAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedGame, setSelectedGame] = useState('all');
 
-  // Sample gaming accounts data - replace with API call
+  // Check for query parameter for initial filtering
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const gameFilter = queryParams.get('game');
+    if (gameFilter) {
+      setSelectedGame(gameFilter);
+      // Clear the query parameter from URL
+      navigate('/account-store', { replace: true });
+    }
+  }, [location.search, navigate]);
+
+  // Sample gaming accounts data matching GamingIdSchema
   const sampleAccounts = [
     {
-      id: 1,
-      game: "Genshin Impact",
-      gameType: "genshin",
-      image: "/mobile-legends.webp",
-      description: "AR 55+ | C6 Zhongli | C3 Raiden | 15+ Five Stars",
-      price: 2700,
-      originalPrice: 3500,
-      discount: 23,
-      inStock: true,
-      features: ["AR 55+", "C6 Zhongli", "C3 Raiden Shogun", "15+ Five Star Characters", "Whale Account"],
-      serverRegion: "Asia",
-      accountLevel: 55,
-      category: "Premium"
-    },
-    {
-      id: 2,
-      game: "MLBB",
+      _id: "1",
+      game: "Mobile Legends",
       gameType: "mlbb",
-      image: "/mobile-legends.webp",
-      description: "Mythic Glory | 692 Skins | Mega Collector | All Heroes",
+      title: "Mobile Legends Premium Account",
+      description: "High-tier MLBB account with extensive skin collection and competitive ranking",
       price: 6500,
-      originalPrice: 8000,
-      discount: 19,
-      inStock: true,
-      features: ["Mythic Glory Rank", "692 Skins", "All Heroes Unlocked", "Mega Collector Badge", "Legend Skins"],
-      serverRegion: "SEA",
-      accountLevel: 999,
-      category: "Ultra Premium"
+      currency: "INR",
+      highlights: {
+        collectorRank: "Mythic Glory",
+        winrate: 87.5,
+        skinsOwned: 692,
+        highestRank: "Mythical Glory 850 Points",
+        loginInfo: "Moonton Account",
+        server: "SEA"
+      },
+      skins: [
+        { hero: "Gusion", skinName: "Holy Blade", rarity: "Legend" },
+        { hero: "Fanny", skinName: "Lifeguard", rarity: "Epic" },
+        { hero: "Lancelot", skinName: "Royal Matador", rarity: "Legend" }
+      ],
+      images: ["/mobile-legends.webp"],
+      tags: ["High Winrate", "SEA Server", "Mythic Rank", "692 Skins"],
+      isSold: false,
+      status: "active"
     },
     {
-      id: 3,
-      game: "BGMI",
-      gameType: "bgmi",
-      image: "/mobile-legends.webp",
-      description: "Conqueror Tier | Premium Pass | Rare Outfits",
-      price: 12800,
-      originalPrice: 15000,
-      discount: 15,
-      inStock: true,
-      features: ["Conqueror Tier", "Premium Pass", "Rare Outfits", "Mythic Items", "High KD Ratio"],
-      serverRegion: "Asia",
-      accountLevel: 100,
-      category: "Premium"
+      _id: "2",
+      game: "Mobile Legends",
+      gameType: "mlbb",
+      title: "MLBB Collector Account",
+      description: "Rare skins and high mythic ranking with excellent winrate",
+      price: 8900,
+      currency: "INR",
+      highlights: {
+        collectorRank: "Mythic Immortal",
+        winrate: 92.3,
+        skinsOwned: 421,
+        highestRank: "Mythical Immortal 1200 Points",
+        loginInfo: "VK Account",
+        server: "SEA"
+      },
+      images: ["/mobile-legends.webp"],
+      tags: ["Mythic Immortal", "High Winrate", "Rare Skins", "VK Login"],
+      isSold: false,
+      status: "active"
     },
     {
-      id: 4,
-      game: "Free Fire",
-      gameType: "freefire",
-      image: "/mobile-legends.webp",
-      description: "Heroic Tier | 150+ Skins | Diamond Collection",
-      price: 4500,
-      originalPrice: 5500,
-      discount: 18,
-      inStock: true,
-      features: ["Heroic Tier", "150+ Skins", "Diamond Character", "Elite Pass", "Rare Bundles"],
-      serverRegion: "India",
-      accountLevel: 65,
-      category: "Premium"
-    },
-    {
-      id: 5,
+      _id: "67423f1a2b3c4d5e6f789abe",
       game: "PUBG Mobile",
       gameType: "pubg",
-      image: "/mobile-legends.webp",
-      description: "Conqueror | Royal Pass | Glacier M416",
-      price: 3200,
-      originalPrice: 4000,
-      discount: 20,
-      inStock: false,
-      features: ["Conqueror Rank", "Royal Pass", "Glacier M416", "Mythic Outfits", "Vehicle Skins"],
-      serverRegion: "Asia",
-      accountLevel: 80,
-      category: "Premium"
+      title: "PUBG Mobile Conqueror Account",
+      description: "Top-tier PUBG Mobile account with Conqueror rank and rare items",
+      price: 4200,
+      currency: "INR",
+      highlights: {
+        collectorRank: "Conqueror",
+        winrate: 78.9,
+        skinsOwned: 156,
+        highestRank: "Conqueror #1847",
+        loginInfo: "Facebook Login",
+        server: "Asia"
+      },
+      images: ["/mobile-legends.webp"],
+      tags: ["Conqueror Rank", "Asia Server", "Royal Pass", "Rare Skins"],
+      isSold: false,
+      status: "active"
     },
     {
-      id: 6,
+      _id: "67423f1a2b3c4d5e6f789abf",
+      game: "Free Fire",
+      gameType: "freefire",
+      title: "Free Fire Heroic Account",
+      description: "Premium Free Fire account with heroic rank and exclusive items",
+      price: 3800,
+      currency: "INR",
+      highlights: {
+        collectorRank: "Heroic",
+        winrate: 82.1,
+        skinsOwned: 198,
+        highestRank: "Heroic Tier",
+        loginInfo: "Google Account",
+        server: "India"
+      },
+      images: ["/mobile-legends.webp"],
+      tags: ["Heroic Rank", "India Server", "Diamond Character", "Elite Pass"],
+      isSold: false,
+      status: "active"
+    },
+    {
+      _id: "67423f1a2b3c4d5e6f789ac0",
+      game: "BGMI",
+      gameType: "bgmi",
+      title: "BGMI Conqueror Account",
+      description: "High-ranking BGMI account with premium cosmetics and achievements",
+      price: 5200,
+      currency: "INR",
+      highlights: {
+        collectorRank: "Conqueror",
+        winrate: 75.6,
+        skinsOwned: 89,
+        highestRank: "Conqueror Tier",
+        loginInfo: "Twitter Login",
+        server: "Asia"
+      },
+      images: ["/mobile-legends.webp"],
+      tags: ["Conqueror", "Premium Pass", "Rare Outfits", "High Rank"],
+      isSold: false,
+      status: "active"
+    },
+    {
+      _id: "67423f1a2b3c4d5e6f789ac1",
       game: "Valorant",
       gameType: "valorant",
-      image: "/mobile-legends.webp",
-      description: "Immortal Rank | Premium Skins | Knife Collection",
-      price: 8900,
-      originalPrice: 11000,
-      discount: 19,
-      inStock: true,
-      features: ["Immortal Rank", "Premium Gun Skins", "Knife Collection", "Rare Bundles", "Battle Pass"],
-      serverRegion: "Asia Pacific",
-      accountLevel: 150,
-      category: "Ultra Premium"
+      title: "Valorant Immortal Account",
+      description: "Top-tier Valorant account with immortal rank and premium skins",
+      price: 12500,
+      currency: "INR",
+      highlights: {
+        collectorRank: "Immortal",
+        winrate: 68.9,
+        skinsOwned: 45,
+        highestRank: "Immortal 2",
+        loginInfo: "Riot Account",
+        server: "Mumbai"
+      },
+      images: ["/mobile-legends.webp"],
+      tags: ["Immortal Rank", "Premium Skins", "Mumbai Server", "Knife Collection"],
+      isSold: false,
+      status: "active"
     },
     {
-      id: 7,
-      game: "Clash of Clans",
-      gameType: "coc",
-      image: "/android-chrome-512x512.png",
-      description: "TH14 Max | Champion League | Rare Decorations",
-      price: 5200,
-      originalPrice: 6500,
-      discount: 20,
-      inStock: true,
-      features: ["Town Hall 14 Max", "Champion League", "Rare Decorations", "Max Heroes", "Season Pass"],
-      serverRegion: "Global",
-      accountLevel: 200,
-      category: "Premium"
-    },
-    {
-      id: 8,
+      _id: "67423f1a2b3c4d5e6f789ac2",
       game: "Call of Duty Mobile",
       gameType: "codm",
-      image: "/android-chrome-512x512.png",
-      description: "Legendary Rank | Mythic Weapons | Rare Camos",
+      title: "COD Mobile Legendary Account",
+      description: "Legendary ranked CODM account with mythic weapons and rare camos",
       price: 7800,
-      originalPrice: 9500,
-      discount: 18,
-      inStock: true,
-      features: ["Legendary Rank", "Mythic Weapons", "Rare Camos", "Character Skins", "CP Credits"],
-      serverRegion: "Global",
-      accountLevel: 150,
-      category: "Ultra Premium"
+      currency: "INR",
+      highlights: {
+        collectorRank: "Legendary",
+        winrate: 71.4,
+        skinsOwned: 234,
+        highestRank: "Legendary Master",
+        loginInfo: "Activision Account",
+        server: "Global"
+      },
+      images: ["/android-chrome-512x512.png"],
+      tags: ["Legendary Rank", "Mythic Weapons", "Global Server", "Rare Camos"],
+      isSold: false,
+      status: "active"
+    },
+    {
+      _id: "67423f1a2b3c4d5e6f789ac3",
+      game: "Clash of Clans",
+      gameType: "coc",
+      title: "Clash of Clans TH15 Max Account",
+      description: "Maxed Town Hall 15 account with champion league ranking",
+      price: 8900,
+      currency: "INR",
+      highlights: {
+        collectorRank: "Champion League",
+        winrate: 89.2,
+        skinsOwned: 0, // COC doesn't have skins
+        highestRank: "Champion League II",
+        loginInfo: "Supercell ID",
+        server: "Global"
+      },
+      images: ["/android-chrome-512x512.png"],
+      tags: ["TH15 Max", "Champion League", "Supercell ID", "Max Heroes"],
+      isSold: false,
+      status: "active"
     }
   ];
 
@@ -157,30 +221,27 @@ const AccountStore = () => {
   }, []);
 
   useEffect(() => {
-    if (gameType) {
-      setSelectedGame(gameType);
-      setFilteredAccounts(accounts.filter(account => account.gameType === gameType));
-    } else {
-      setSelectedGame('all');
+    if (selectedGame === 'all') {
       setFilteredAccounts(accounts);
+    } else {
+      const filtered = accounts.filter(account => account.gameType === selectedGame);
+      setFilteredAccounts(filtered);
     }
-  }, [gameType, accounts]);
+  }, [selectedGame, accounts]);
 
   const handleGameFilter = (gameId) => {
     setSelectedGame(gameId);
     if (gameId === 'all') {
       setFilteredAccounts(accounts);
-      navigate('/account-store');
     } else {
       const filtered = accounts.filter(account => account.gameType === gameId);
       setFilteredAccounts(filtered);
-      navigate(`/account/${gameId}`);
     }
   };
 
   const handleAccountClick = (account) => {
     // Navigate to individual account detail page
-    navigate(`/account-details/${account.id}`, { state: { account } });
+    navigate(`/account-details/${account._id}`, { state: { account } });
   };
 
   if (loading) {
@@ -202,8 +263,6 @@ const AccountStore = () => {
           <h1>Premium Gaming Accounts</h1>
           <p>Discover high-level gaming accounts with premium items, rare skins, and competitive rankings</p>
         </div>
-
-
 
         {/* Game Filter Tabs */}
         <div className="game-filter-container">
@@ -232,52 +291,65 @@ const AccountStore = () => {
           ) : (
             <div className="accounts-grid">
               {filteredAccounts.map((account) => (
-                <div 
-                  key={account.id} 
-                  className={`account-grid-card ${!account.inStock ? 'out-of-stock' : ''}`}
+                <div
+                  key={account._id}
+                  className={`account-grid-card ${account.isSold ? 'out-of-stock' : ''}`}
                   onClick={() => handleAccountClick(account)}
                 >
                   <div className="account-card-image">
-                    <img src={account.image} alt={account.game} />
-                    {account.discount > 0 && (
-                      <div className="discount-badge">-{account.discount}%</div>
-                    )}
-                    {!account.inStock && (
+                    <img src={account.images[0]} alt={account.game} />
+                    {account.isSold && (
                       <div className="out-of-stock-overlay">
-                        <span>Out of Stock</span>
+                        <span>Sold Out</span>
                       </div>
                     )}
-                    <div className="category-badge">{account.category}</div>
+                    {/* <div className="rank-badge">{account.highlights.collectorRank}</div> */}
                   </div>
-                  
+
                   <div className="account-card-content">
-                    <h3 className="account-game-title">{account.game}</h3>
-                    <p className="account-description">{account.description}</p>
-                    
-                    <div className="account-features">
-                      {account.features.slice(0, 3).map((feature, index) => (
-                        <span key={index} className="feature-tag">{feature}</span>
-                      ))}
+                    <div className="card-top-content">
+                      <h3 className="account-game-title">{account.game}</h3>
+                      <p className="account-description">{account.description}</p>
+
+                      {/* <div className="account-features">
+                        {account.tags.map((tag, index) => (
+                          <span key={index} className="feature-tag">{tag}</span>
+                        ))}
+                      </div> */}
                     </div>
-                    
-                    <div className="account-details">
-                      <div className="account-level">Level {account.accountLevel}</div>
-                      <div className="account-region">{account.serverRegion}</div>
-                    </div>
-                    
+
+                    {/* <div className="card-bottom-content">
+                      <div className="account-highlights">
+                        <div className="highlight-item">
+                          <span className="highlight-label">Winrate:</span>
+                          <span className="highlight-value">{account.highlights.winrate}%</span>
+                        </div>
+                        {account.highlights.skinsOwned > 0 && (
+                          <div className="highlight-item">
+                            <span className="highlight-label">Skins:</span>
+                            <span className="highlight-value">{account.highlights.skinsOwned}</span>
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="account-details">
+                        <div className="account-server">{account.highlights.server}</div>
+                        <div className="account-login">{account.highlights.loginInfo}</div>
+                      </div>
+                      
+                   
+                      
+                      <button 
+                        className={`buy-now-btn ${account.isSold ? 'disabled' : ''}`}
+                        disabled={account.isSold}
+                      >
+                        {account.isSold ? 'Sold Out' : 'Buy Now'}
+                      </button>
+                    </div> */}
+
                     <div className="account-pricing">
-                      {account.originalPrice > account.price && (
-                        <span className="original-price">₹{account.originalPrice}</span>
-                      )}
                       <span className="current-price">₹{account.price}</span>
                     </div>
-                    
-                    <button 
-                      className={`buy-now-btn ${!account.inStock ? 'disabled' : ''}`}
-                      disabled={!account.inStock}
-                    >
-                      {account.inStock ? 'Buy Now' : 'Out of Stock'}
-                    </button>
                   </div>
                 </div>
               ))}

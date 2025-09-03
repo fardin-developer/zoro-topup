@@ -70,8 +70,21 @@ const GamingAccounts = () => {
   ];
 
   const handleBuyNow = (account) => {
-    // Navigate to account details or purchase page
-    navigate(account.link);
+    // Navigate to account store with game type filter
+    const gameTypeMap = {
+      'genshin': 'genshin',
+      'mlbb': 'mlbb', 
+      'valorant': 'valorant',
+      'bgmi': 'bgmi',
+      'codm': 'codm'
+    };
+    
+    const gameType = gameTypeMap[account.game.toLowerCase()];
+    if (gameType) {
+      navigate(`/account-store?game=${gameType}`);
+    } else {
+      navigate('/account-store');
+    }
   };
 
   return (

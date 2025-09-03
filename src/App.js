@@ -68,6 +68,7 @@ import { gapi } from "gapi-script";
 import AccountStore from "./pages/AccountStore.js";
 import AccountDetails from "./pages/AccountDetails.js";
 
+
 function App() {
   const [website, setWebsite] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -140,7 +141,6 @@ function App() {
           <Route path="/games" element={<GamePage />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/account-store" element={<AccountStore />} />
-          <Route path="/account/:gameType" element={<AccountStore />} />
           <Route path="/account-details/:accountId" element={<AccountDetails />} />
           {/* <Route path="/referandearn" element={<ReferAndEarn />} /> */}
           {/* <Route path="/service" element={<Service />} /> */}

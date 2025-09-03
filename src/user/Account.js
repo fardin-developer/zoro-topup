@@ -71,37 +71,72 @@ const Account = () => {
   };
 
   // Upload profile picture
-  const handleProfilePictureUpload = async () => {
-    if (!profilePicFile) {
-      message.warning("Please select an image");
-      return;
-    }
-    try {
-      const formData = new FormData();
-      formData.append("profilePicture", profilePicFile);
+// Upload profile picture
+const handleProfilePictureUpload = async () => {
+  if (!profilePicFile) {
+    message.warning("Please select an image");
+    return;
+  }
 
-      const res = await axios.post(
-        "https://api.zorotopup.com/api/v1/user/profile-picture",
-        formData,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+  // Validate file type
+  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+  if (!allowedTypes.includes(profilePicFile.type)) {
+    message.error("Please select a valid image file (JPEG, PNG, or GIF)");
+    return;
+  }
 
-      if (res.data) {
-        message.success("Profile picture updated successfully");
-        getUserData();
-        setProfilePicFile(null);
+  // Validate file size (5MB limit)
+  const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+  if (profilePicFile.size > maxSize) {
+    message.error("Image size should be less than 5MB");
+    return;
+  }
+
+  try {
+    const formData = new FormData();
+    // Use the field names that work in Postman
+    formData.append("image", profilePicFile);
+    // OR try imageFile if image doesn't work:
+    // formData.append("imageFile", profilePicFile);
+
+    console.log("Uploading file:", profilePicFile.name, profilePicFile.type, profilePicFile.size);
+
+    const res = await axios.post(
+      "https://api.zorotopup.com/api/v1/user/profile-picture",
+      formData,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          // Don't manually set Content-Type - let browser handle it with boundary
+        },
       }
-    } catch (error) {
-      console.error(error);
+    );
+
+    if (res.data) {
+      message.success("Profile picture updated successfully");
+      getUserData();
+      setProfilePicFile(null);
+      // Clear the file input
+      document.getElementById('profile-pic-input').value = '';
+    }
+  } catch (error) {
+    console.error("Profile picture upload error:", error);
+    
+    // Better error handling
+    if (error.response) {
+      console.log("Error response:", error.response.data);
+      console.log("Error status:", error.response.status);
+      const errorMessage = error.response.data?.message || error.response.data?.error || "Failed to upload profile picture";
+      message.error(errorMessage);
+    } else if (error.request) {
+      console.log("Network error:", error.request);
+      message.error("Network error. Please check your connection and try again.");
+    } else {
+      console.log("Error:", error.message);
       message.error("Failed to upload profile picture");
     }
-  };
-
+  }
+};
   return (
     <Layout>
       <div className="user-accout-details" style={{ minHeight: "300px" }}>

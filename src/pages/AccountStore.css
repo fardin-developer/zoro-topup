@@ -1,187 +1,135 @@
-/* AccountStore.css */
+/* Account Store - Compact E-commerce Layout */
 .account-store-container {
   min-height: 100vh;
-  background: var(--b);
-  color: #fff;
-  font-family: 'Exo 2', sans-serif;
-}
-
-/* Loading Screen */
-.account-store-loading {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 60vh;
-  color: #fff;
-}
-
-.loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid #333;
-  border-top: 3px solid #ff0000;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 20px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  background: var(--bg);
+  color: var(--color);
+  padding: 20px 0;
 }
 
 /* Hero Section */
 .account-store-hero {
   text-align: center;
-  padding: 60px 20px 40px;
-  background: linear-gradient(135deg, var(--b) 0%, #1a1a2e 100%);
-  border-bottom: 1px solid #333;
+  padding: 30px 20px;
+  background: linear-gradient(135deg, var(--e) 0%, var(--f) 100%);
+  border-bottom: 2px solid var(--t);
+  margin-bottom: 25px;
 }
 
 .account-store-hero h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 15px;
-  background: linear-gradient(45deg, #ff0000, #ff6b6b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--t);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .account-store-hero p {
-  font-size: 1.2rem;
-  color: #ccc;
-  max-width: 600px;
+  font-size: 1rem;
+  color: var(--a);
+  opacity: 0.9;
+  max-width: 500px;
   margin: 0 auto;
-  line-height: 1.6;
 }
 
-/* Featured Accounts Section */
-.featured-accounts-section {
-  margin-bottom: 40px;
-}
-
-/* Game Filter Container */
+/* Game Filter Section */
 .game-filter-container {
-  padding: 40px 20px 20px;
-  border-bottom: 1px solid #333;
+  padding: 0 20px;
+  margin-bottom: 25px;
 }
 
 .game-filter-container h2 {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 25px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--t);
+  margin-bottom: 15px;
   text-align: center;
-  color: #fff;
 }
 
 .game-filter-tabs {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
-  max-width: 1200px;
-  margin: 0 auto;
+  gap: 8px;
+  margin-bottom: 15px;
 }
 
 .filter-tab {
-  background: linear-gradient(145deg, #2a2a3e, #1e1e2f);
-  color: #fff;
-  border: 2px solid #333;
-  padding: 12px 20px;
-  border-radius: 25px;
+  padding: 8px 15px;
+  background: var(--e);
+  color: var(--a);
+  border: 2px solid transparent;
+  border-radius: 20px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
   transition: all 0.3s ease;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 120px;
-  justify-content: center;
+  text-transform: uppercase;
 }
 
 .filter-tab:hover {
-  border-color: #ff0000;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+  border-color: var(--t);
+  background: rgba(160, 33, 0, 0.1);
 }
 
 .filter-tab.active {
-  background: linear-gradient(145deg, #ff0000, #dc2626);
-  border-color: #ff0000;
-  box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
+  background: var(--t);
+  color: var(--a);
+  border-color: var(--t);
 }
 
 .filter-tab .count {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.filter-tab.active .count {
-  background: rgba(255, 255, 255, 0.3);
+  font-size: 11px;
+  opacity: 0.8;
+  margin-left: 4px;
 }
 
 /* Accounts Grid Container */
 .accounts-grid-container {
-  padding: 40px 20px 60px;
+  padding: 0 20px;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-.no-accounts {
-  text-align: center;
-  padding: 80px 20px;
-  color: #888;
-}
-
-.no-accounts h3 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  color: #ccc;
-}
-
-.no-accounts p {
-  font-size: 1.1rem;
-}
-
-/* Accounts Grid */
 .accounts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 25px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 10px 0;
 }
 
+/* Standard E-commerce Card */
 .account-grid-card {
-  background: linear-gradient(145deg, #2a2a3e, #1e1e2f);
-  border-radius: 15px;
+  background: var(--e);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 2px solid #333;
   position: relative;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+  aspect-ratio: 3/4;
+  display: flex;
+  flex-direction: column;
 }
 
 .account-grid-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
-  border-color: #ff0000;
+  box-shadow: 0 6px 25px rgba(160, 33, 0, 0.2);
+  border-color: var(--t);
 }
 
 .account-grid-card.out-of-stock {
-  opacity: 0.7;
-  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-/* Account Card Image */
+/* Standard Card Image */
 .account-card-image {
   position: relative;
-  height: 200px;
+  height: 50%;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .account-card-image img {
@@ -195,30 +143,33 @@
   transform: scale(1.05);
 }
 
+/* Compact Badges */
 .discount-badge {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  background: linear-gradient(45deg, #ff0000, #dc2626);
-  color: white;
-  padding: 5px 10px;
+  top: 8px;
+  left: 8px;
+  background: var(--c);
+  color: var(--a);
+  padding: 3px 8px;
   border-radius: 15px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  box-shadow: 0 2px 8px rgba(255, 0, 0, 0.3);
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 2;
 }
 
-.category-badge {
+.rank-badge {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: linear-gradient(45deg, #1e40af, #3b82f6);
-  color: white;
-  padding: 5px 10px;
+  top: 8px;
+  right: 8px;
+  background: var(--t);
+  color: var(--a);
+  padding: 4px 10px;
   border-radius: 15px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1px solid var(--t);
+  box-shadow: 0 2px 8px rgba(160, 33, 0, 0.3);
 }
 
 .out-of-stock-overlay {
@@ -231,197 +182,334 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ff6b6b;
-  font-weight: 700;
-  font-size: 1.2rem;
+  z-index: 3;
 }
 
-/* Account Card Content */
+.out-of-stock-overlay span {
+  background: var(--c);
+  color: var(--a);
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+/* Standard Card Content */
 .account-card-content {
-  padding: 20px;
+  padding: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Top Content Group */
+.card-top-content {
+  flex: 1;
 }
 
 .account-game-title {
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 700;
-  margin-bottom: 8px;
-  color: #fff;
+  color: var(--t);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
 }
 
 .account-description {
-  color: #ccc;
-  margin-bottom: 15px;
-  line-height: 1.5;
-  font-size: 0.95rem;
+  font-size: 13px;
+  color: var(--a);
+  opacity: 0.9;
+  margin-bottom: 10px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
+/* Features - Show only top 3 */
 .account-features {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 15px;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
 .feature-tag {
-  background: rgba(255, 0, 0, 0.1);
-  color: #ff6b6b;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  border: 1px solid rgba(255, 0, 0, 0.2);
+  background: rgba(160, 33, 0, 0.2);
+  color: var(--t);
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  border: 1px solid rgba(160, 33, 0, 0.3);
 }
 
+.feature-tag:nth-child(n+4) {
+  display: none;
+}
+
+/* Bottom Content Group */
+.card-bottom-content {
+  margin-top: auto;
+}
+
+/* Account Highlights */
+.account-highlights {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 10px;
+}
+
+.highlight-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11px;
+}
+
+.highlight-label {
+  color: var(--a);
+  opacity: 0.7;
+  font-size: 9px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.highlight-value {
+  color: var(--t);
+  font-weight: 700;
+  font-size: 11px;
+}
+
+/* Account Details */
 .account-details {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
-  padding: 10px 0;
-  border-top: 1px solid #333;
-  border-bottom: 1px solid #333;
+  margin-bottom: 10px;
+  font-size: 10px;
 }
 
-.account-level,
-.account-region {
-  font-size: 0.9rem;
-  color: #aaa;
+.account-server {
+  background: var(--f);
+  color: var(--a);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.account-login {
+  color: var(--a);
+  opacity: 0.8;
   font-weight: 500;
 }
 
+/* Pricing */
 .account-pricing {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .original-price {
-  color: #888;
+  color: var(--a);
+  opacity: 0.6;
   text-decoration: line-through;
-  font-size: 0.95rem;
+  font-size: 13px;
 }
 
 .current-price {
-  color: #fff;
+  color: var(--t);
   font-size: 1.3rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 
+/* Buy Button */
 .buy-now-btn {
   width: 100%;
-  background: linear-gradient(45deg, #ff0000, #dc2626);
-  color: white;
+  padding: 10px;
+  background: var(--btn);
+  color: var(--a);
   border: none;
-  padding: 12px 20px;
   border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  font-weight: 700;
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
 }
 
 .buy-now-btn:hover {
-  background: linear-gradient(45deg, #dc2626, #b91c1c);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+  border-color: var(--t);
+  box-shadow: 0 3px 10px rgba(160, 33, 0, 0.3);
 }
 
 .buy-now-btn.disabled {
-  background: #666;
+  background: var(--s);
+  opacity: 0.5;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
 }
 
-.buy-now-btn.disabled:hover {
-  background: #666;
-  transform: none;
-  box-shadow: none;
+/* No Accounts */
+.no-accounts {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--a);
+}
+
+.no-accounts h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: var(--t);
+}
+
+/* Loading */
+.account-store-loading {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--a);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(160, 33, 0, 0.3);
+  border-top: 3px solid var(--t);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Responsive Design */
-@media screen and (max-width: 768px) {
-  .account-store-hero h1 {
-    font-size: 2.2rem;
-  }
-
-  .account-store-hero p {
-    font-size: 1rem;
-  }
-
-  .game-filter-tabs {
-    gap: 10px;
-  }
-
-  .filter-tab {
-    padding: 10px 15px;
-    min-width: 100px;
-    font-size: 0.9rem;
-  }
-
+@media screen and (max-width: 1200px) {
   .accounts-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-  }
-
-  .account-grid-card {
-    margin-bottom: 0;
-  }
-
-  .account-card-image {
-    height: 180px;
-  }
-
-  .account-game-title {
-    font-size: 1.2rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
+  .account-store-container {
+    padding: 15px 0;
+  }
+
   .account-store-hero {
-    padding: 40px 15px 30px;
+    padding: 25px 15px;
+    margin-bottom: 20px;
   }
 
   .account-store-hero h1 {
     font-size: 1.8rem;
   }
 
+  .game-filter-container {
+    padding: 0 15px;
+    margin-bottom: 20px;
+  }
+
+  .accounts-grid-container {
+    padding: 0 15px;
+  }
+
   .accounts-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
   }
 
-  .filter-tab {
-    flex: 1;
-    min-width: auto;
+  .account-grid-card {
+    aspect-ratio: 3/4.2;
   }
 
-  .game-filter-container h2 {
-    font-size: 1.6rem;
+  .account-card-content {
+    padding: 12px;
+  }
+
+  .account-game-title {
+    font-size: 0.9rem;
+  }
+
+  .current-price {
+    font-size: 1.2rem;
   }
 }
 
-/* Custom scrollbar for horizontal scrolling on mobile */
-@media screen and (max-width: 768px) {
-  .game-filter-tabs {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 10px;
+@media screen and (max-width: 480px) {
+  .accounts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
-  .game-filter-tabs::-webkit-scrollbar {
-    height: 4px;
+  .account-grid-card {
+    aspect-ratio: 3/4.5;
   }
 
-  .game-filter-tabs::-webkit-scrollbar-track {
-    background: #333;
-    border-radius: 2px;
+  .account-card-content {
+    padding: 10px;
   }
 
-  .game-filter-tabs::-webkit-scrollbar-thumb {
-    background: #ff0000;
-    border-radius: 2px;
+  .account-game-title {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+  }
+
+  .account-description {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .current-price {
+    font-size: 1.1rem;
+  }
+
+  .buy-now-btn {
+    padding: 8px;
+    font-size: 11px;
+  }
+
+  .feature-tag {
+    padding: 2px 6px;
+    font-size: 9px;
+  }
+}
+
+/* 3 columns for larger mobile screens */
+@media screen and (min-width: 600px) and (max-width: 768px) {
+  .accounts-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .account-grid-card {
+    aspect-ratio: 3/4.8;
+  }
+
+  .account-card-content {
+    padding: 10px;
+  }
+
+  .account-game-title {
+    font-size: 0.8rem;
+  }
+
+  .current-price {
+    font-size: 1rem;
+  }
+
+  .buy-now-btn {
+    padding: 8px;
+    font-size: 11px;
   }
 }

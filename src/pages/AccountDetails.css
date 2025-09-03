@@ -7,7 +7,14 @@
   padding: 20px;
 }
 
-/* Back Button */
+/* Back Navigation */
+.back-navigation {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
 .back-button {
   background: linear-gradient(145deg, #2a2a3e, #1e1e2f);
   color: #fff;
@@ -17,7 +24,6 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
-  margin-bottom: 30px;
   font-size: 1rem;
 }
 
@@ -138,7 +144,7 @@
   margin: 0;
 }
 
-.category-badge {
+.game-type-badge {
   background: linear-gradient(45deg, #1e40af, #3b82f6);
   color: white;
   padding: 8px 16px;
@@ -168,6 +174,12 @@
   color: #fff;
   font-size: 2.2rem;
   font-weight: 700;
+}
+
+.currency {
+  color: #aaa;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .savings {
@@ -359,6 +371,233 @@
 
 .info-section li:last-child {
   border-bottom: none;
+}
+
+/* Account Highlights Section */
+.account-highlights-section {
+  margin-bottom: 30px;
+}
+
+.account-highlights-section h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.highlight-item {
+  background: linear-gradient(145deg, #2a2a3e, #1e1e2f);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.highlight-item .label {
+  color: #aaa;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.highlight-item .value {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.rank-value {
+  color: #ff6b6b;
+  font-weight: 700;
+}
+
+.winrate-value {
+  color: #10b981;
+  font-weight: 700;
+}
+
+.skins-value {
+  color: #f59e0b;
+  font-weight: 700;
+}
+
+/* Skins Section */
+.skins-section {
+  margin-bottom: 30px;
+}
+
+.skins-section h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.skins-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.skin-item {
+  background: linear-gradient(145deg, #2a2a3e, #1e1e2f);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  text-align: center;
+}
+
+.skin-hero {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.skin-name {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.skin-rarity {
+  padding: 4px 8px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.skin-rarity.legend {
+  background: linear-gradient(45deg, #f59e0b, #d97706);
+  color: #fff;
+}
+
+.skin-rarity.epic {
+  background: linear-gradient(45deg, #8b5cf6, #7c3aed);
+  color: #fff;
+}
+
+.skin-rarity.rare {
+  background: linear-gradient(45deg, #3b82f6, #2563eb);
+  color: #fff;
+}
+
+.skin-rarity.common {
+  background: linear-gradient(45deg, #6b7280, #4b5563);
+  color: #fff;
+}
+
+/* Tags Section */
+.account-tags-section {
+  margin-bottom: 30px;
+}
+
+.account-tags-section h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag-item {
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff6b6b;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.tag-item:hover {
+  background: rgba(255, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Account Status Section */
+.account-status-section {
+  margin-bottom: 30px;
+}
+
+.account-status-section h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.status-item {
+  background: linear-gradient(145deg, #2a2a3e, #1e1e2f);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-item .label {
+  color: #aaa;
+  font-weight: 500;
+}
+
+.status-item .value {
+  color: #fff;
+  font-weight: 600;
+}
+
+.status-active {
+  color: #10b981 !important;
+}
+
+.status-inactive {
+  color: #ff6b6b !important;
+}
+
+.in-stock {
+  color: #10b981 !important;
+}
+
+.out-of-stock {
+  color: #ff6b6b !important;
+}
+
+/* Rank Badge */
+.rank-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(45deg, #ff0000, #dc2626);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
+  z-index: 2;
 }
 
 /* Responsive Design */
