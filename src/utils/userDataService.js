@@ -32,6 +32,7 @@ const getUserData = async (dispatch, setUserParam, setBalance) => {
           email: userData.email,
           apiKey: userData.apiKey,
           walletBalance: userData.walletBalance,
+          profilePicture: userData.profilePicture, // Add profile picture field
         };
         
         dispatch(setUser(userObject));

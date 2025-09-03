@@ -248,6 +248,16 @@
     cursor: pointer;
   }
 }
+
+.logouticon .profile-image {
+  border: 2px solid var(--c);
+  transition: all 0.3s ease;
+}
+
+.logouticon .profile-image:hover {
+  transform: scale(1.05);
+  border-color: var(--t);
+}
 .logouticon .profiletabs {
   position: absolute;
   top: 50px;

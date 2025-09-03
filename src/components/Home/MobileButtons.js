@@ -35,7 +35,7 @@ const MobileButtons = () => {
         <div className="iconcontainer">
           <CurrencyExchangeIcon className="icon" />
         </div>
-        <span className="orb">ID Store</span>
+        <span className="orb">Gaming ID</span>
       </div>
     </div>
   );

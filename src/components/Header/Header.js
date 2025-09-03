@@ -101,11 +101,12 @@ const Header = () => {
             )}
 
             <div className="logouticon">
-              {user?.userimg ? (
+              {user?.profilePicture ? (
                 <img
-                  src={`${website.link}/${user?.userimg}`}
-                  alt="userimg"
+                  src={user.profilePicture}
+                  alt="Profile"
                   onClick={() => setProfilemenu(!profilemenu)}
+                  className="profile-image"
                 />
               ) : (
                 <AccountCircleIcon
@@ -158,11 +159,12 @@ const Header = () => {
                 {balance}
               </div>
               <div className="logouticon">
-                {user?.userimg ? (
+                {user?.profilePicture ? (
                   <img
-                    src={`${website.link}/${user?.userimg}`}
-                    alt="userimg"
+                    src={user.profilePicture}
+                    alt="Profile"
                     onClick={() => setProfilemenu(!profilemenu)}
+                    className="profile-image"
                   />
                 ) : (
                   <AccountCircleIcon

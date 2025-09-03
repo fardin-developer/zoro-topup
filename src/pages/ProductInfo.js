@@ -346,8 +346,8 @@ const ProductInfo = () => {
             <div
               className={`p-info-container area loading ${loading && "active"}`}
               style={{
-                backgroundImage: gameData?.bannerImage 
-                  ? `url(${gameData.bannerImage})`
+                backgroundImage: gameData?.image 
+                  ? `url(${gameData.image})`
                   : `url(${website.link}/default-banner.jpg)`,
                 backgroundSize: "cover",
                 backgroundPosition: "top",
