@@ -1,6 +1,6 @@
 const IMAGES = {
   logo: require("../img/logo.png"),
-  ycoin: require("../img/zcoin.png"),
+  ycoin: require("../img/wallet-2-64.png"),
   // leaderboard
   first: require("../img/leaderboard/one.png"),
   second: require("../img/leaderboard/two.png"),
