@@ -183,7 +183,8 @@
     font-size: 15px;
   }
 }
-@media screen and (max-width: 786px) {
+/* Mobile responsive styles for new leaderboard */
+@media screen and (max-width: 768px) {
   .leaderboard-container {
     padding: 50px 10px;
   }
@@ -214,4 +215,392 @@
   .user-reward {
     width: 80%;
   }
+  
+  /* Completely redesign podium for mobile */
+  .podium-avatar {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  
+  .podium-avatar-first {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  
+  /* Make podium horizontal and compact */
+  .mobile-podium-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-around !important;
+    align-items: flex-end !important;
+    gap: 8px !important;
+    margin-bottom: 20px !important;
+    padding: 0 10px !important;
+  }
+  
+  .mobile-podium-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    flex: 1 !important;
+    max-width: 100px !important;
+  }
+  
+  .mobile-first-place {
+    background: #1c1c1c !important;
+    padding: 8px !important;
+    border-radius: 8px !important;
+    border: 2px solid #ff1f5a !important;
+    box-shadow: 0 0 10px #ff1f5a !important;
+    margin-top: -10px !important;
+  }
+  
+  .mobile-avatar-container {
+    position: relative !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .mobile-medal {
+    position: absolute !important;
+    top: -12px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-size: 1.2rem !important;
+  }
+  
+  .mobile-player-name {
+    font-size: 0.7rem !important;
+    margin: 2px 0 !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+  }
+  
+  .mobile-player-amount {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+  }
+  
+  /* Override desktop table styles for mobile */
+  .leaderboard-container .leadboard {
+    width: 100% !important;
+    padding: 10px !important;
+    max-width: none !important;
+  }
+  
+  /* Mobile table responsive overrides */
+  .leaderboard-table {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+  
+  .table-header {
+    grid-template-columns: 50px 1fr 50px 70px !important;
+    gap: 4px !important;
+    padding: 0 4px !important;
+    font-size: 0.7rem !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 12px !important;
+    border-bottom: 1px solid #dc2626 !important;
+  }
+  
+  .table-row {
+    grid-template-columns: 50px 1fr 50px 70px !important;
+    gap: 4px !important;
+    padding: 8px 4px !important;
+    margin-bottom: 8px !important;
+    border-radius: 6px !important;
+    font-size: 0.75rem !important;
+    background-color: transparent !important;
+  }
+  
+  .row-avatar {
+    width: 20px !important;
+    height: 20px !important;
+    border: 1px solid #ff1f5a !important;
+  }
+  
+  .name-with-avatar {
+    gap: 4px !important;
+  }
+  
+  .fname-span {
+    font-size: 0.75rem !important;
+  }
+  
+  /* Past Month Table Mobile Responsive Styles */
+  .past-month-container {
+    padding: 10px !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+  
+  .past-month-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    grid-template-columns: none !important;
+  }
+  
+  .past-month-winner-item {
+    padding: 12px !important;
+    margin: 0 !important;
+    border-radius: 8px !important;
+    font-size: 0.85rem !important;
+  }
+  
+  .past-month-winner-info {
+    gap: 8px !important;
+  }
+  
+  .past-month-winner-rank {
+    padding: 6px 12px !important;
+    font-size: 0.9rem !important;
+    min-width: 35px !important;
+  }
+  
+  .past-month-winner-name {
+    font-size: 0.9rem !important;
+  }
+  
+  .past-month-winner-prize {
+    font-size: 1rem !important;
+  }
+}
+
+/* Tablet responsive styles */
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+  .past-month-container {
+    padding: 30px 20px !important;
+    max-width: 800px !important;
+  }
+  
+  .past-month-list {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+    gap: 20px !important;
+  }
+  
+  .past-month-winner-item {
+    padding: 18px !important;
+    border-radius: 12px !important;
+    font-size: 1rem !important;
+  }
+  
+  .past-month-winner-info {
+    gap: 12px !important;
+  }
+  
+  .past-month-winner-rank {
+    padding: 10px 16px !important;
+    font-size: 1.1rem !important;
+    min-width: 45px !important;
+  }
+  
+  .past-month-winner-name {
+    font-size: 1.1rem !important;
+  }
+  
+  .past-month-winner-prize {
+    font-size: 1.25rem !important;
+  }
+}
+
+/* Desktop and Large Screen Optimizations */
+@media screen and (min-width: 1024px) {
+  .leaderboard-container {
+    padding: 60px 40px;
+  }
+  
+  .leaderboard-container .leadboard {
+    width: 70%;
+    padding: 40px;
+  }
+  
+  /* Enhanced podium for desktop */
+  .mobile-podium-container {
+    padding: 60px 40px !important;
+    gap: 60px !important;
+    margin-bottom: 80px !important;
+  }
+  
+  .mobile-podium-item {
+    max-width: 200px !important;
+  }
+  
+  .mobile-first-place {
+    padding: 32px !important;
+    margin-top: -20px !important;
+    transform: scale(1.1);
+  }
+  
+  .mobile-avatar-container {
+    margin-bottom: 16px !important;
+  }
+  
+  .mobile-medal {
+    font-size: 3rem !important;
+    top: -30px !important;
+  }
+  
+  .mobile-player-name {
+    font-size: 1.1rem !important;
+    margin: 12px 0 8px 0 !important;
+  }
+  
+  .mobile-player-amount {
+    font-size: 1rem !important;
+  }
+  
+  /* Table hover effects for desktop */
+  .leaderboard-container .leadboard .custom-body td:hover {
+    background: linear-gradient(135deg, #ff1f5a 0%, #dc2626 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 31, 90, 0.4);
+  }
+  
+  /* Enhanced winner items for desktop */
+  .winners:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 31, 90, 0.3);
+    border: 2px solid #ff1f5a;
+  }
+  
+  /* Better tab buttons for desktop */
+  .leaderboardbuttons button {
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .leaderboardbuttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 31, 90, 0.3);
+  }
+  
+  .leaderboardbuttons button.active {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 31, 90, 0.5);
+  }
+  
+  /* Past Month Table Desktop Styles */
+  .past-month-container {
+    padding: 60px 40px !important;
+    max-width: 1200px !important;
+  }
+  
+  .past-month-list {
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)) !important;
+    gap: 30px !important;
+  }
+  
+  .past-month-winner-item {
+    padding: 24px !important;
+    border-radius: 16px !important;
+    font-size: 1.1rem !important;
+    transition: all 0.3s ease;
+  }
+  
+  .past-month-winner-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(255, 31, 90, 0.3);
+  }
+  
+  .past-month-winner-info {
+    gap: 16px !important;
+  }
+  
+  .past-month-winner-rank {
+    padding: 12px 20px !important;
+    font-size: 1.2rem !important;
+    min-width: 50px !important;
+  }
+  
+  .past-month-winner-name {
+    font-size: 1.2rem !important;
+  }
+  
+  .past-month-winner-prize {
+    font-size: 1.4rem !important;
+  }
+}
+
+/* Extra Large Screens */
+@media screen and (min-width: 1440px) {
+  .leaderboard-container {
+    padding: 80px 60px;
+  }
+  
+  .leaderboard-container .leadboard {
+    width: 60%;
+    padding: 50px;
+  }
+  
+  .mobile-podium-container {
+    gap: 80px !important;
+    padding: 80px 60px !important;
+  }
+  
+  .mobile-first-place {
+    padding: 40px !important;
+    transform: scale(1.15);
+  }
+  
+  .mobile-medal {
+    font-size: 3.5rem !important;
+  }
+  
+  .mobile-player-name {
+    font-size: 1.2rem !important;
+  }
+  
+  .mobile-player-amount {
+    font-size: 1.1rem !important;
+  }
+  
+  /* Past Month Table Extra Large Screen Styles */
+  .past-month-container {
+    padding: 80px 60px !important;
+    max-width: 1400px !important;
+  }
+  
+  .past-month-list {
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)) !important;
+    gap: 40px !important;
+  }
+  
+  .past-month-winner-item {
+    padding: 30px !important;
+    border-radius: 20px !important;
+    font-size: 1.2rem !important;
+  }
+  
+  .past-month-winner-info {
+    gap: 20px !important;
+  }
+  
+  .past-month-winner-rank {
+    padding: 16px 24px !important;
+    font-size: 1.3rem !important;
+    min-width: 60px !important;
+  }
+  
+  .past-month-winner-name {
+    font-size: 1.3rem !important;
+  }
+  
+  .past-month-winner-prize {
+    font-size: 1.5rem !important;
+  }
+}
+
+.mobile-podium-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  flex: 1 !important;
+  max-width: 300px !important;
 }
