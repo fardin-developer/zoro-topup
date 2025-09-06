@@ -6,6 +6,9 @@ import "./Products.css";
 const Products = ({ title }) => {
   const navigate = useNavigate();
   const [games, setGames] = useState([]);
+  const [filteredGames, setFilteredGames] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [loading, setLoading] = useState(false);
   const [loader, setLoader] = useState(true);
 
@@ -16,6 +19,12 @@ const Products = ({ title }) => {
       const res = await axios.get("https://api.zorotopup.com/api/v1/games/get-all");
       if (res.data.success) {
         setGames(res.data.games);
+        setFilteredGames(res.data.games);
+        
+        // Extract unique categories and convert to lowercase
+        const uniqueCategories = [...new Set(res.data.games.map(game => game.category?.toLowerCase()))].filter(Boolean);
+        setCategories(["all", ...uniqueCategories]);
+        
         setTimeout(() => {
           setLoading(false);
           setLoader(false);
@@ -31,6 +40,22 @@ const Products = ({ title }) => {
     }
   };
 
+  // Filter games based on selected category
+  useEffect(() => {
+    if (selectedCategory === "all") {
+      setFilteredGames(games);
+    } else {
+      const filtered = games.filter(game => 
+        game.category?.toLowerCase() === selectedCategory
+      );
+      setFilteredGames(filtered);
+    }
+  }, [selectedCategory, games]);
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+  };
+
   useEffect(() => {
     getAllGames();
   }, []);
@@ -41,8 +66,22 @@ const Products = ({ title }) => {
         <div className="titlee">
           <h5 className="m-0">All Games</h5>
         </div>
+        
+        {/* Category Filter */}
+        <div className="category-filter">
+          {categories.map((category, index) => (
+            <button
+              key={index}
+              className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
+              onClick={() => handleCategorySelect(category)}
+            >
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </button>
+          ))}
+        </div>
+        
         <div className="games-list">
-          {games?.map((item, index) => (
+          {filteredGames?.map((item, index) => (
             <div
               key={index}
               className="game"

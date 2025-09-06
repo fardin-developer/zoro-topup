@@ -21,6 +21,85 @@
   cursor: pointer;
   text-decoration: underline;
 }
+
+/* Category Filter Styles */
+.category-filter {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 30px;
+  padding: 0 20px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--s) transparent;
+  position: relative;
+}
+
+.category-filter::before,
+.category-filter::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.category-filter::before {
+  left: 0;
+  background: linear-gradient(to right, var(--b), transparent);
+}
+
+.category-filter::after {
+  right: 0;
+  background: linear-gradient(to left, var(--b), transparent);
+}
+
+.category-filter::-webkit-scrollbar {
+  height: 6px;
+}
+
+.category-filter::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.category-filter::-webkit-scrollbar-thumb {
+  background: var(--s);
+  border-radius: 3px;
+}
+
+.category-filter::-webkit-scrollbar-thumb:hover {
+  background: var(--s);
+  opacity: 0.8;
+}
+
+.category-btn {
+  padding: 8px 20px;
+  border: 2px solid var(--s);
+  background: transparent;
+  color: var(--c);
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: capitalize;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.category-btn:hover {
+  background: var(--s);
+  color: var(--p);
+  transform: translateY(-2px);
+}
+
+.category-btn.active {
+  background: var(--s);
+  color: var(--p);
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+}
 .games-list {
   width: 100%;
   display: flex;
@@ -72,6 +151,20 @@
     padding: 30px 10px;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
   }
+  
+  .category-filter {
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  
+  .category-btn {
+    padding: 6px 15px;
+    font-size: 12px;
+  }
+  
   .games-list {
     gap: 15px;
   }
